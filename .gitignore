@@ -1,0 +1,21 @@
+# Segredos — nunca subir
+.env
+.env.*
+*.key
+*.pem
+credentials*
+secrets*
+
+# Sistema
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Editores
+.vscode/
+.idea/
+
+# Ferramentas de agente (podem conter chaves)
+.claude/
+.codex/
+.agents/

@@ -1,0 +1,1034 @@
+<title>DocLytics</title>
+<script>document.documentElement.classList.add("js");</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;450;500;600&display=swap">
+
+<style>
+/* ===========================================================
+   DocLytics — landing page
+   Tema claro fixo (decisão de projeto: sem variante escura).
+   Cores, tipografia e botões vindos do design system do app.
+   =========================================================== */
+:root{
+  --white:#ffffff;
+  --bg:#ffffff;
+  --bg-tint:#f6f8f8;          /* neutro levemente puxado para o verde da marca */
+  --fg:#0a0a0a;
+  --muted-fg:#6e6e6e;
+  --faint:#9aa3a1;
+  --border:#e8eae9;
+  --border-strong:#d9dedd;
+
+  --primary:#336666;
+  --primary-hover:#295757;
+  --primary-soft:#eff5f5;
+  --primary-deep:#1f4f4f;
+  --primary-fg:#ffffff;
+
+  --gold:#b98a4b;
+  --success:#2f7d5d;
+
+  --grad:linear-gradient(135deg,#3d7474 0%,#336666 100%);
+  --grad-hover:linear-gradient(135deg,#00b2b2 0%,#009d9d 100%);
+
+  --shadow-soft:0 1px 2px rgb(16 24 24 / .04);
+  --shadow-card:0 2px 4px rgb(16 24 24 / .03), 0 12px 32px -12px rgb(16 24 24 / .07);
+  --shadow-float:0 4px 10px rgb(16 24 24 / .04), 0 40px 80px -32px rgb(31 79 79 / .22);
+
+  --ease:cubic-bezier(.32,.72,0,1);
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+section[id],header[id]{scroll-margin-top:96px;} /* altura da barra + folga */
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--fg);
+  font-family:'Inter',ui-sans-serif,system-ui,sans-serif;
+  font-size:16px;line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3,h4{
+  font-family:'Inter Tight','Inter',ui-sans-serif,system-ui,sans-serif;
+  letter-spacing:-.025em;margin:0;text-wrap:balance;font-weight:600;color:var(--fg);
+}
+p{margin:0;}
+a{color:inherit;text-decoration:none;}
+ul{margin:0;padding:0;list-style:none;}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px;border-radius:8px;}
+
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+.mid{max-width:860px;margin:0 auto;padding:0 24px;}
+
+/* ---------- nav ---------- */
+/* barra retangular fixa, ocupando a largura toda — lê como uma faixa acima da página */
+.nav{
+  position:sticky;top:0;z-index:40;
+  background:rgba(255,255,255,.9);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner{
+  max-width:1120px;margin:0 auto;height:72px;
+  display:flex;align-items:center;gap:28px;padding:0 24px;
+}
+.logo{display:flex;align-items:center;color:var(--primary);flex-shrink:0;}
+.logo svg{height:38px;width:auto;display:block;}
+.nav-links{display:flex;gap:28px;margin:0 auto;font-size:.9rem;color:var(--muted-fg);font-weight:450;}
+.nav-links a{transition:color .4s var(--ease);}
+.nav-links a:hover{color:var(--fg);}
+/* CTA do cabeçalho é secundário: menor que os botões do corpo da página */
+.nav .btn-primary{font-size:.85rem;padding:7px 7px 7px 18px;}
+.nav .btn-primary .cap{width:25px;height:25px;}
+.nav .btn-primary .cap svg{width:11px;height:11px;}
+
+/* ---------- botões (design system) ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  font-family:inherit;font-size:.94rem;font-weight:500;
+  border-radius:999px;border:1px solid transparent;cursor:pointer;
+  transition:background-image .5s var(--ease),background-color .5s var(--ease),
+             box-shadow .5s var(--ease),transform .3s var(--ease),border-color .4s var(--ease),color .4s var(--ease);
+}
+.btn:active{transform:scale(.985);}
+.btn-primary{
+  padding:11px 11px 11px 24px;
+  background-color:var(--primary);background-image:var(--grad);
+  color:var(--primary-fg);box-shadow:0 1px 3px rgb(51 102 102 / .18);
+}
+.btn-primary:hover{background-image:var(--grad-hover);box-shadow:0 3px 16px rgb(0 178 178 / .3);}
+.btn-primary .cap{
+  width:29px;height:29px;border-radius:999px;background:rgba(255,255,255,.18);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  transition:transform .5s var(--ease),background .5s var(--ease);
+}
+.btn-primary:hover .cap{transform:translate(3px,-1px) scale(1.06);background:rgba(255,255,255,.26);}
+.btn-primary .cap svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.7;}
+.btn-ghost{padding:11px 22px;border-color:var(--border-strong);color:var(--fg);background:var(--white);}
+.btn-ghost:hover{border-color:var(--primary);color:var(--primary);}
+.btn-lg{font-size:1rem;}
+.btn-lg.btn-primary{padding:14px 14px 14px 30px;}
+.btn-lg.btn-ghost{padding:14px 30px;}
+
+/* ---------- ritmo e cabeçalhos centralizados ---------- */
+section{padding:120px 0;}
+.tint{background:var(--bg-tint);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+
+/* pílula com ícone, caixa baixa — segue os tokens, então inverte sozinha na faixa escura */
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;border-radius:999px;
+  padding:7px 16px 7px 12px;font-size:.84rem;font-weight:500;letter-spacing:-.005em;
+  background:var(--white);color:var(--fg);
+  border:1px solid var(--border);box-shadow:var(--shadow-soft);
+}
+.eyebrow svg{
+  width:15px;height:15px;flex-shrink:0;
+  stroke:var(--primary);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;
+}
+
+.head{text-align:center;max-width:820px;margin:0 auto 64px;}
+.head h2{font-size:clamp(1.9rem,3.6vw,2.8rem);line-height:1.12;letter-spacing:-.035em;margin-top:22px;}
+.head p{color:var(--muted-fg);font-size:1.06rem;margin:18px auto 0;max-width:58ch;}
+
+/* reveal */
+.js .rv{opacity:0;transform:translateY(24px);transition:opacity .9s var(--ease),transform .9s var(--ease);}
+.js .rv.in{opacity:1;transform:none;}
+@media (prefers-reduced-motion:reduce){
+  .js .rv{opacity:1;transform:none;transition:none;}
+  *{animation-duration:.001ms !important;transition-duration:.001ms !important;}
+}
+
+/* ---------- hero ---------- */
+.hero{padding:72px 0 104px;text-align:center;position:relative;}
+.hero::before{
+  content:"";position:absolute;left:50%;top:-160px;width:1100px;height:640px;
+  transform:translateX(-50%);z-index:-1;pointer-events:none;
+  background:radial-gradient(50% 50% at 50% 50%,rgba(51,102,102,.09) 0%,rgba(51,102,102,0) 72%);
+}
+.hero h1{
+  /* quebra explícita em 2 linhas: a largura só precisa comportar a maior delas */
+  font-size:clamp(2.1rem,5vw,3.85rem);line-height:1.06;letter-spacing:-.042em;
+  margin:26px auto 0;max-width:960px;text-wrap:pretty;
+}
+.hero h1 em{font-style:normal;color:var(--primary);}
+.hero .sub{color:var(--muted-fg);font-size:1.14rem;margin:24px auto 0;max-width:57ch;}
+.cta-row{display:flex;gap:12px;margin-top:36px;justify-content:center;flex-wrap:wrap;}
+.trust{display:flex;gap:26px;flex-wrap:wrap;justify-content:center;margin-top:30px;font-size:.86rem;color:var(--muted-fg);}
+.trust span{display:inline-flex;align-items:center;gap:7px;}
+.trust svg{width:14px;height:14px;stroke:var(--success);fill:none;stroke-width:2.4;flex-shrink:0;}
+
+/* ---------- painel demonstrativo ---------- */
+.panel-out{max-width:980px;margin:64px auto 0;
+  background:rgba(16,24,24,.028);border:1px solid rgba(16,24,24,.055);
+  border-radius:28px;padding:8px;box-shadow:var(--shadow-float);}
+.panel{background:var(--white);border:1px solid var(--border);border-radius:21px;padding:26px 26px 22px;text-align:left;}
+.panel-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;flex-wrap:wrap;}
+.panel-top h3{font-size:.98rem;}
+.panel-top .tag{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint);font-weight:600;}
+/* seletor de período (usado na seção de planos) */
+.periods{display:flex;gap:5px;background:var(--bg-tint);padding:4px;border-radius:13px;margin-bottom:20px;border:1px solid var(--border);}
+.periods button{
+  flex:1;font-family:inherit;font-size:.83rem;font-weight:500;padding:9px 6px;border:0;border-radius:10px;
+  background:transparent;color:var(--muted-fg);cursor:pointer;
+  transition:background .45s var(--ease),color .45s var(--ease),box-shadow .45s var(--ease);
+}
+.periods button:hover{color:var(--fg);}
+.periods button[aria-selected="true"]{background:var(--white);color:var(--primary);box-shadow:var(--shadow-soft);}
+
+/* ================= simulação do produto (hero) ================= */
+.sim-nav{display:flex;gap:8px;margin-bottom:18px;}
+.sim-nav button{
+  flex:1;font-family:inherit;font-size:.82rem;font-weight:500;text-align:left;
+  padding:0;border:0;background:transparent;color:var(--muted-fg);cursor:pointer;
+  transition:color .45s var(--ease);
+}
+.sim-nav button[aria-selected="true"]{color:var(--primary);}
+.sim-nav .sn{
+  display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:99px;
+  background:var(--bg-tint);color:var(--faint);font-size:9.5px;font-weight:700;margin-right:8px;
+  transition:background .45s var(--ease),color .45s var(--ease);
+}
+.sim-nav button[aria-selected="true"] .sn{background:var(--primary);color:#fff;}
+.sim-nav .bar{display:block;height:2px;background:var(--border);border-radius:99px;margin-top:11px;overflow:hidden;}
+.sim-nav .bar i{display:block;height:100%;background:var(--primary);transform:scaleX(0);transform-origin:left;}
+
+.stage{display:grid;} /* telas empilhadas na mesma célula: a altura é a da maior */
+.screen{
+  grid-area:1/1;opacity:0;transform:translateY(10px);pointer-events:none;
+  transition:opacity .55s var(--ease),transform .55s var(--ease);
+}
+.screen.is-on{opacity:1;transform:none;pointer-events:auto;}
+
+/* --- tela 1: painel --- */
+.mrow4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.metric{border:1px solid var(--border);border-radius:15px;padding:15px 16px;background:var(--white);}
+.metric .k{font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint);font-weight:600;}
+.metric .v{font-family:'Inter Tight',sans-serif;font-size:1.4rem;font-weight:600;letter-spacing:-.03em;
+  margin-top:6px;font-variant-numeric:tabular-nums;line-height:1.15;}
+.chart{
+  display:flex;align-items:flex-end;gap:9px;height:104px;margin-top:10px;
+  padding:16px 16px 0;border:1px solid var(--border);border-radius:15px;background:var(--white);
+}
+.chart i{
+  flex:1;height:var(--h);background:var(--primary-soft);border-radius:4px 4px 0 0;
+  transform:scaleY(0);transform-origin:bottom;transition:transform .8s var(--ease);
+}
+.chart i.last{background:var(--primary);}
+.screen.is-on .chart i{transform:scaleY(1);}
+.chart i:nth-child(2){transition-delay:.06s} .chart i:nth-child(3){transition-delay:.12s}
+.chart i:nth-child(4){transition-delay:.18s} .chart i:nth-child(5){transition-delay:.24s}
+.chart i:nth-child(6){transition-delay:.3s}  .chart i:nth-child(7){transition-delay:.36s}
+.chart i:nth-child(8){transition-delay:.42s}
+.chart-x{display:flex;gap:9px;padding:7px 16px 0;}
+.chart-x span{flex:1;text-align:center;font-size:9px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;}
+
+/* --- tela 2: novo fechamento --- */
+.frow{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:11px 16px;border:1px solid var(--border);border-radius:13px;background:var(--white);margin-bottom:8px;
+  opacity:0;transform:translateY(6px);transition:opacity .5s var(--ease),transform .5s var(--ease);
+}
+.screen.is-on .frow{opacity:1;transform:none;}
+.screen.is-on .frow:nth-child(1){transition-delay:.15s}
+.screen.is-on .frow:nth-child(2){transition-delay:.85s}
+.screen.is-on .frow:nth-child(3){transition-delay:1.4s}
+.screen.is-on .frow:nth-child(4){transition-delay:1.95s}
+.screen.is-on .frow:nth-child(5){transition-delay:2.5s}
+.fl{font-size:.78rem;color:var(--faint);letter-spacing:.03em;flex-shrink:0;}
+.fv{font-size:.9rem;font-weight:500;text-align:right;display:flex;align-items:center;gap:10px;}
+.fv em{font-style:normal;color:var(--muted-fg);font-weight:450;font-variant-numeric:tabular-nums;}
+.typed{display:inline-flex;align-items:center;gap:2px;}
+.caret{width:1.5px;height:15px;background:var(--primary);animation:blink 1s steps(1) infinite;}
+@keyframes blink{50%{opacity:0}}
+.chipx{font-size:.78rem;font-weight:500;padding:3px 11px;border-radius:999px;background:var(--primary-soft);color:var(--primary);}
+.chipx.ok{background:rgba(47,125,93,.1);color:var(--success);}
+.total{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:16px 18px;border-radius:15px;color:#fff;margin-top:12px;
+  background:linear-gradient(150deg,#2a4a4a 0%,#1f3a3a 100%);
+  opacity:0;transform:translateY(6px);transition:opacity .5s var(--ease),transform .5s var(--ease);
+}
+.screen.is-on .total{opacity:1;transform:none;transition-delay:3.05s;}
+.total span{font-size:.8rem;color:rgba(255,255,255,.68);}
+.total strong{font-family:'Inter Tight',sans-serif;font-size:1.55rem;font-weight:600;letter-spacing:-.03em;font-variant-numeric:tabular-nums;}
+
+/* --- tela 3: relatório --- */
+.orow{
+  display:grid;grid-template-columns:1fr auto;gap:7px 16px;align-items:center;
+  padding:13px 16px;border:1px solid var(--border);border-radius:14px;background:var(--white);margin-bottom:9px;
+}
+.ohead{display:flex;align-items:center;gap:9px;font-size:.9rem;font-weight:500;}
+.ov{font-family:'Inter Tight',sans-serif;font-size:1.1rem;font-weight:600;letter-spacing:-.025em;font-variant-numeric:tabular-nums;}
+.track{grid-column:1/-1;height:5px;border-radius:99px;background:var(--bg-tint);overflow:hidden;}
+.track i{
+  display:block;height:100%;width:var(--w);border-radius:99px;background:var(--primary);
+  transform:scaleX(0);transform-origin:left;transition:transform .9s var(--ease);
+}
+.screen.is-on .track i{transform:scaleX(1);}
+.screen.is-on .orow:nth-child(2) .track i{transition-delay:.14s}
+.screen.is-on .orow:nth-child(3) .track i{transition-delay:.28s}
+.orow.org .track i{background:var(--faint);}
+.om{grid-column:1/-1;font-size:.75rem;color:var(--faint);font-variant-numeric:tabular-nums;}
+.otag{font-size:9px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;padding:2px 8px;border-radius:999px;
+  background:var(--primary-soft);color:var(--primary);}
+.orow.org .otag{background:var(--bg-tint);color:var(--faint);}
+
+.sim-foot{margin-top:14px;font-size:.77rem;color:var(--muted-fg);display:flex;gap:8px;align-items:flex-start;line-height:1.5;}
+.sim-foot svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;flex-shrink:0;margin-top:4px;}
+
+/* ---------- recursos ---------- */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.card{
+  background:var(--white);border:1px solid var(--border);border-radius:20px;
+  padding:34px 28px;text-align:center;box-shadow:var(--shadow-soft);
+  transition:transform .7s var(--ease),box-shadow .7s var(--ease),border-color .7s var(--ease);
+}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-card);border-color:var(--border-strong);}
+.card .ico{
+  width:44px;height:44px;border-radius:13px;background:var(--primary-soft);color:var(--primary);
+  display:flex;align-items:center;justify-content:center;margin:0 auto 18px;
+}
+.card .ico svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
+.card h3{font-size:1.08rem;margin-bottom:10px;}
+.card p{color:var(--muted-fg);font-size:.93rem;}
+
+/* ---------- como funciona ---------- */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.step{text-align:center;padding:0 14px;position:relative;}
+.step .n{
+  width:38px;height:38px;border-radius:999px;margin:0 auto 20px;
+  background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;
+  font-family:'Inter Tight',sans-serif;font-size:.9rem;font-weight:600;
+  box-shadow:0 1px 3px rgb(51 102 102 / .2);
+}
+.step h3{font-size:1.12rem;margin-bottom:10px;}
+.step p{color:var(--muted-fg);font-size:.95rem;max-width:34ch;margin:0 auto;}
+
+/* ---------- faixa escura (mesma mecânica de tokens do .dark do app) ---------- */
+.dark{
+  position:relative;overflow:hidden;background:#0e1414;color:#f2f4f4;
+  --white:#151d1d;
+  --bg-tint:#1b2727;
+  --fg:#f2f4f4;
+  --muted-fg:#a3adad;
+  --faint:#8a9a98;              /* claro o suficiente para os rótulos passarem em contraste */
+  --border:rgba(255,255,255,.10);
+  --border-strong:rgba(255,255,255,.18);
+  --primary:#6fa3a3;
+  --primary-soft:#1b2727;
+  --primary-deep:#9cc2c2;
+  --shadow-soft:0 1px 2px rgb(0 0 0 / .28);
+}
+.dark::before{
+  content:"";position:absolute;left:50%;top:-32%;width:1040px;height:660px;
+  transform:translateX(-50%);pointer-events:none;
+  background:radial-gradient(50% 50% at 50% 50%,rgba(111,163,163,.14) 0%,rgba(111,163,163,0) 70%);
+}
+.dark .wrap{position:relative;}
+
+/* ---------- métricas: o resultado é o herói do card ---------- */
+.defs{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch;}
+.def{
+  display:flex;flex-direction:column;
+  background:var(--white);border:1px solid var(--border);border-radius:20px;
+  padding:36px 28px;text-align:center;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
+}
+.def .lbl{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:var(--faint);}
+.def .val{
+  font-family:'Inter Tight',sans-serif;font-size:2.7rem;font-weight:600;letter-spacing:-.04em;
+  color:var(--fg);line-height:1;margin-top:16px;font-variant-numeric:tabular-nums;
+}
+.def .name{font-size:.88rem;color:var(--muted-fg);margin-top:14px;}
+/* a conta em Inter com numerais tabulares — sem família monoespaçada fora do design system */
+.def .calc{font-size:.79rem;color:var(--faint);margin-top:7px;font-variant-numeric:tabular-nums;}
+.def p{
+  color:var(--muted-fg);font-size:.89rem;
+  margin-top:20px;padding-top:20px;border-top:1px solid var(--border);
+}
+
+/* fecho da seção: tipográfico, sem virar um quarto card */
+.rule-note{
+  max-width:680px;margin:56px auto 0;padding-top:46px;
+  border-top:1px solid var(--border);text-align:center;
+}
+.rule-note h3{font-size:1.32rem;letter-spacing:-.025em;margin-top:18px;}
+.rule-note p{color:var(--muted-fg);font-size:.97rem;margin-top:14px;}
+
+/* ---------- planos: um card, seletor de período ---------- */
+.pricing-out{
+  max-width:540px;margin:0 auto;
+  background:rgba(16,24,24,.028);border:1px solid rgba(16,24,24,.055);
+  border-radius:28px;padding:8px;box-shadow:var(--shadow-card);
+}
+.pricing{background:var(--white);border:1px solid var(--border);border-radius:21px;padding:28px 30px 30px;text-align:center;}
+/* abas com o preço de cada período, para comparar sem clicar */
+.periods{margin-bottom:28px;gap:6px;padding:5px;}
+.periods button{padding:11px 8px;line-height:1.25;}
+.periods .pname{display:block;font-size:.78rem;font-weight:500;}
+.periods .pval{
+  display:block;font-family:'Inter Tight',sans-serif;font-size:1.06rem;font-weight:600;
+  letter-spacing:-.022em;margin-top:4px;font-variant-numeric:tabular-nums;color:var(--fg);
+  transition:color .45s var(--ease);
+}
+.periods button[aria-selected="true"] .pval{color:var(--primary);}
+.periods .off{
+  display:block;height:14px;font-size:9.5px;letter-spacing:.06em;font-weight:600;
+  color:var(--success);margin-top:3px;
+}
+
+.price .eq{
+  font-family:'Inter Tight',sans-serif;font-size:3.3rem;font-weight:600;letter-spacing:-.04em;
+  font-variant-numeric:tabular-nums;line-height:1;
+}
+/* só o sufixo encolhe — antes esta regra pegava também o span do preço */
+.price .eq .per{font-size:.95rem;font-weight:450;color:var(--muted-fg);letter-spacing:0;}
+.price .full{font-size:.9rem;color:var(--muted-fg);margin-top:12px;}
+/* altura fixa: o card não pode "pular" quando o Trimestral fica sem tarja */
+.price .save{
+  display:inline-flex;align-items:center;height:26px;margin-top:14px;
+  font-size:.78rem;font-weight:500;
+  color:var(--success);background:rgba(47,125,93,.09);padding:0 12px;border-radius:999px;
+}
+.price .save:empty{background:none;}
+
+.incl{
+  margin:28px auto 0;padding-top:24px;border-top:1px solid var(--border);
+  display:inline-block;text-align:left;
+}
+.incl li{display:flex;gap:11px;align-items:flex-start;font-size:.93rem;color:var(--muted-fg);padding:6px 0;}
+.incl svg{width:15px;height:15px;stroke:var(--primary);fill:none;stroke-width:2.6;flex-shrink:0;margin-top:5px;}
+
+.pricing .btn{width:100%;margin-top:28px;}
+.pay-note{font-size:.86rem;color:var(--muted-fg);margin-top:16px;}
+.pay-note a{color:var(--primary);font-weight:500;border-bottom:1px solid rgba(51,102,102,.28);}
+.pay-note a:hover{border-bottom-color:var(--primary);}
+.plans-foot{text-align:center;color:var(--faint);font-size:.86rem;margin-top:26px;}
+
+/* ---------- faq ---------- */
+.faq{max-width:760px;margin:0 auto;}
+details{border-bottom:1px solid var(--border);}
+details:first-child{border-top:1px solid var(--border);}
+details summary{
+  cursor:pointer;list-style:none;padding:24px 44px 24px 0;
+  font-family:'Inter Tight',sans-serif;font-size:1.05rem;font-weight:500;
+  position:relative;letter-spacing:-.015em;
+}
+details summary::-webkit-details-marker{display:none;}
+details summary::after{
+  content:"";position:absolute;right:8px;top:50%;width:9px;height:9px;
+  border-right:1.8px solid var(--faint);border-bottom:1.8px solid var(--faint);
+  transform:translateY(-70%) rotate(45deg);transition:transform .5s var(--ease);
+}
+details[open] summary::after{transform:translateY(-30%) rotate(-135deg);}
+details .a{padding:0 44px 26px 0;color:var(--muted-fg);font-size:.97rem;}
+
+/* ---------- cta final ---------- */
+.final{text-align:center;padding:112px 0;}
+.final h2{font-size:clamp(1.8rem,4.2vw,3rem);line-height:1.08;letter-spacing:-.04em;max-width:none;margin:24px auto 0;}
+/* linha única a partir do tablet; abaixo disso deixa quebrar para não estourar a tela */
+@media (min-width:620px){.final h2{white-space:nowrap;}}
+.final p{color:var(--muted-fg);margin:20px auto 0;max-width:50ch;font-size:1.06rem;}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--border);padding:48px 0;font-size:.86rem;color:var(--muted-fg);background:var(--bg-tint);}
+.f-in{display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center;}
+.f-legal{display:flex;flex-direction:column;gap:5px;}
+.f-legal .dev{font-size:.8rem;color:var(--faint);}
+.f-links{display:flex;gap:26px;flex-wrap:wrap;justify-content:center;}
+.f-links a{transition:color .4s var(--ease);}
+.f-links a:hover{color:var(--fg);}
+
+/* ---------- responsivo ---------- */
+@media (max-width:940px){
+  .nav-links{display:none;}
+  .nav-inner{justify-content:space-between;}
+  .cards,.steps,.defs{grid-template-columns:1fr;}
+  .mrow4{grid-template-columns:1fr 1fr;}
+  section{padding:88px 0;}
+}
+@media (max-width:600px){
+  section{padding:72px 0;}
+  .hero{padding:44px 0 76px;}
+  .wrap,.mid{padding:0 18px;}
+  .nav-inner{height:62px;padding:0 18px;}
+  .mrow4{grid-template-columns:1fr 1fr;gap:8px;}
+  .panel-out{margin-top:44px;border-radius:24px;}
+  .panel{padding:18px;}
+  /* a simulação fica apertada no celular: encurta rótulos e alturas */
+  .sim-nav{gap:5px;}
+  .sim-nav button{font-size:.7rem;}
+  .sim-nav .sn{margin-right:5px;}
+  .metric .v{font-size:1.15rem;}
+  .chart{height:78px;}
+  .frow{flex-direction:column;align-items:flex-start;gap:5px;padding:10px 13px;}
+  .fv{text-align:left;font-size:.86rem;}
+  .total strong{font-size:1.3rem;}
+  .om{font-size:.7rem;}
+  .btn{width:100%;}
+  .btn-primary{padding-left:24px;}
+  .trust{gap:14px;flex-direction:column;align-items:center;}
+}
+</style>
+
+<!-- ===================== NAV ===================== -->
+<div class="nav">
+  <nav class="nav-inner">
+    <a class="logo" href="#topo" aria-label="DocLytics — início">
+      <svg viewBox="130 425 850 275" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="DocLytics">
+        <g transform="translate(3421.2 0)" fill="currentColor">
+          <path d="M-3145.3,542.5v123.4c0,3-1.5,5.9-3.6,7.8s-.4.3-.6.5l-4,2.5c-2.9,1.8-6.2,2.4-9.6,1.3s-.2,0-.4-.1l-46.1-20.5-54.8-23.7c-.2,0-.3-.1-.5-.2-5-3-8.6-8.3-8.6-14.2v-145c0-.1,0-.3,0-.4.4-4,2.8-6.7,6.2-8.4,2.8-1.5,6.1-2.9,9.4-1.5l58.7,25.3,21.9,9.4c.6.3.9.7.9,1.3v11.6c.2,8.9,6.7,19.8,15.2,23.4l14.5,6.1c.6.2,1.3.5,1.3,1.5ZM-3210.3,628.5v-6.2c0-.5.5-.7.9-.7,8.2.8,15-2.3,17.6-10.3,2.1-6.3,1.2-13.1-2-19s-4.5-6.3-7.6-8.8-.2-.1-.3-.2l-6.3-4.3c0,0-.1,0-.2-.1l-8.1-4.9c-5.1-3.1-9.2-8.3-7.7-14.4.7-2.8,2.9-4.9,5.9-4.9,7.6,0,14.2,5.4,15.9,12.8.2,1,1.2,1.4,2,1.4l6.3-.2c.9,0,1.8-.8,1.6-1.8-1.3-9-7.8-16.1-15.8-20.3s-2.1-2-2.1-3.4v-5c0-.7-.5-1.7-1.2-1.9l-5.3-1.9c-.9-.3-1.8.4-1.8,1.3v3.9c0,2.1-1.7,3.8-3.8,3.8h0c-.1,0-.2,0-.3,0-7.4.8-11.7,6.6-12.4,13.8s1.9,15.2,7.2,20.8c2.5,2.7,5.4,4.8,8.6,6.7l7.2,4.2c5.6,3.3,11,8,10.3,14.8s-2.4,5.8-5.6,6.3c-2.5.5-5,0-7.4-.8-6.7-2.1-11.5-7.4-13-14.3-.2-1.1-1.1-1.7-2.2-1.7h-6.1c-2.7,0-1.4,4-.3,7.1,2.7,7.8,8.2,14.1,15.5,17.9,1.3.7,2.1,2,2.1,3.4v5c0,1,1,1.6,1.9,1.9l4.4,1.5c1,.3,1.9-.5,1.9-1.6Z"/>
+          <path d="M-3136.6,658.8v-121.1c0-1.8-1.4-2.6-2.7-3.2l-15.5-6.3c-7.7-3.2-12.9-10.8-13.2-19.1v-13.4c0-1.1-.5-2.5-1.6-2.9l-25.4-11.2-46.8-20.5c-1.4-.6-2.3-2-2.3-3.6v-1.8c0-3.7,2.6-6,5.7-7.5s6-2.8,9.3-1.4l59.6,25.6,46.6,20.1c5.8,2.5,8.7,9,8.7,14.9v4.4s0,134,0,134c0,3.7-2.2,7.2-5.3,8.9l-10.4,6c-2.4,1.4-6.6.5-6.6-1.8Z"/>
+          <path d="M-3101.2,642.9c-1.7,1-4.9,1.2-4.9-.7v-139.2c0-6.7-3-12.7-8.9-16s-.2-.1-.4-.2l-37.9-16.3-60.5-25.8c-1.4-.6-2.3-2-2.4-3.5v-.8c0-3.8,2.1-6.3,5.3-7.8s5.3-2.5,8.2-1.3l59.5,25.2,43.7,18.5c6.3,2.7,9.9,8.6,9.9,15.5v139.7c0,3.5-1.8,6.8-4.6,8.5l-6.9,4.1Z"/>
+          <path d="M-2965.2,552.8c0,9-1.6,16.8-4.9,23.2-3.3,6.5-7.8,11.5-13.7,14.9-5.9,3.5-12.9,5.2-21,5.2s-15.4-1.7-21.6-5.1c-6.2-3.4-11.1-8.1-14.5-14.1-3.5-6-5.2-12.8-5.2-20.5s1.7-14.5,5.1-20.5c3.4-5.9,8-10.6,13.8-14.1,5.8-3.4,12.3-5.2,19.5-5.2s10.4,1,14.8,3.1c4.4,2.1,7.9,4.9,10.7,8.5v-36.8c0-2.6.8-4.6,2.5-5.9,1.7-1.4,3.9-2,6.6-2s2.9.1,4.4.4c1.5.3,2.7.7,3.6,1.2v67.6ZM-3022,538.5c-4.3,4.5-6.5,10.4-6.5,17.7s2.2,13.2,6.5,17.7c4.4,4.5,9.9,6.8,16.6,6.8s12.4-2.2,16.7-6.8,6.5-10.4,6.5-17.7-2.2-13.2-6.5-17.7-9.9-6.8-16.7-6.8-12.2,2.2-16.6,6.8Z"/>
+          <path d="M-2950.7,576.6c-3.7-6-5.5-12.8-5.5-20.2s1.8-14.3,5.5-20.3c3.6-6,8.6-10.7,14.8-14.2,6.2-3.5,13.2-5.2,21-5.2s14.8,1.8,21.1,5.2c6.2,3.5,11.2,8.2,14.8,14.2,3.6,6,5.4,12.8,5.4,20.3s-1.8,14.2-5.4,20.2c-3.6,6-8.5,10.8-14.8,14.2-6.3,3.5-13.3,5.2-21.1,5.2s-14.8-1.8-21-5.2c-6.2-3.5-11.1-8.2-14.8-14.2ZM-2894.5,569.2c2-3.8,3-8,3-12.8s-1-9.1-3-12.8c-2-3.8-4.8-6.7-8.3-8.8-3.6-2.1-7.6-3.1-12.1-3.1s-8.5,1-12.1,3.1c-3.6,2.1-6.3,5-8.3,8.8-2,3.8-3,8-3,12.8s1,9.1,3,12.8c2,3.8,4.8,6.7,8.3,8.8,3.5,2.1,7.6,3.2,12.1,3.2s8.5-1.1,12.1-3.2c3.5-2.1,6.3-5,8.3-8.8Z"/>
+          <path d="M-2861,535.8c3.3-6,8.2-10.7,14.5-14.1,6.3-3.4,13.8-5.1,22.5-5.1s9.5.6,13.6,1.7c4,1.2,7.2,2.7,9.4,4.7,2.2,1.9,3.3,4,3.3,6.3s-.5,3.2-1.6,4.9-2.5,3.2-4.3,4.6c-2.5-2.3-5.5-4.1-9.1-5.3-3.6-1.2-7.3-1.9-11.3-1.9-7.3,0-13.2,2.2-17.5,6.5-4.4,4.4-6.6,10.4-6.6,18.1s2.2,13.6,6.7,18.1c4.4,4.5,10.5,6.7,18.1,6.7s13-1.7,18.6-5.1l7.2,12.8c-8.3,5-17.5,7.5-27.8,7.5s-15.2-1.6-21.3-4.9c-6.1-3.2-10.9-7.8-14.2-13.7-3.4-5.9-5.1-12.8-5.1-20.8s1.7-14.9,5-20.9Z"/>
+          <path d="M-2781.1,594h-9.9v-105.5c0-3.4,1.8-5.1,5.4-5.1s3.3.4,4.5,1v109.5Z"/>
+          <path d="M-2696.5,588.6c0,12.1-3.2,21.3-9.6,27.5-6.4,6.2-15.9,9.4-28.4,9.4s-10-.5-15.3-1.3c-5.3-.9-9.9-2.1-13.8-3.6l2.8-7.8c3.5,1.3,7.7,2.3,12.6,3.2,4.9.8,9.4,1.2,13.5,1.2,9.8,0,17-2.3,21.5-6.8,4.5-4.6,6.8-11.2,6.8-20v-6.9c-1.9,3.9-5.1,7-9.7,9.3-4.6,2.3-10.1,3.5-16.6,3.5-10.1,0-18.3-2.8-24.5-8.4-6.2-5.6-9.3-13.4-9.3-23.4v-39.3c0-3.4,1.8-5.1,5.4-5.1s3.5.4,4.5,1.1v41.2c0,8.3,2.1,14.6,6.2,18.9,4.1,4.3,10.2,6.4,18.1,6.4s14.6-2.3,19-7c4.4-4.7,6.6-11.3,6.6-19.9v-35.7c0-3.4,1.8-5.1,5.4-5.1s3.5.4,4.5,1.1v67.7Z"/>
+          <path d="M-2681.7,504.9c0-3.4,1.8-5.1,5.4-5.1s3.3.4,4.5,1.1v19h26.4c3.7,0,5.6,1.6,5.6,5s-.3,2.7-.9,4h-31v43.5c0,4.9,1.3,8.7,3.9,11.3,2.6,2.7,6.3,4,11.2,4s10.5-1.4,15-4.3l4.4,6.4c-2.5,1.9-5.7,3.4-9.5,4.6-3.9,1.1-7.8,1.7-11.8,1.7-7.2,0-12.9-2-17-5.9-4.1-3.9-6.2-9.3-6.2-16.2v-69.1Z"/>
+          <path d="M-2631.7,499c-1.4-1.4-2-3.2-2-5.2s.7-3.7,2-5.2c1.3-1.4,3.1-2.2,5.2-2.2s3.8.7,5.2,2.2c1.4,1.5,2,3.2,2,5.2s-.7,3.7-2,5.2c-1.3,1.5-3.1,2.2-5.2,2.2s-3.8-.7-5.2-2.2ZM-2621.5,594h-9.9v-69c0-3.4,1.8-5.1,5.4-5.1s3.3.4,4.5,1.1v73Z"/>
+          <path d="M-2604.2,577.5c-3.2-5.9-4.7-12.7-4.7-20.4s1.7-15.1,5-20.9c3.3-5.8,7.9-10.4,13.9-13.6,5.9-3.2,12.9-4.8,20.8-4.8s9.2.5,13.6,1.6c4.4,1,7.4,2.3,9.1,3.7,1.7,1.4,2.5,3,2.5,4.7s-1.1,4-3.3,5.7c-2.5-2.2-5.7-3.9-9.6-5.2-3.9-1.2-8.1-1.9-12.5-1.9-8.9,0-15.9,2.7-21.1,8-5.2,5.4-7.7,12.8-7.7,22.4s2.7,17.2,8.1,22.7c5.4,5.4,12.9,8.1,22.5,8.1s13.4-1.6,19.2-4.9l4,7.3c-3.9,2.2-8,3.8-12.1,4.7-4.2.9-8.5,1.4-12.8,1.4-8.3,0-15.4-1.6-21.3-4.9-5.9-3.2-10.4-7.8-13.6-13.7Z"/>
+          <path d="M-2472.6,573.2c0,7-3,12.6-9,16.7s-14,6.2-23.9,6.2-9.5-.5-14.5-1.4c-5-.9-9.4-2-13.3-3.3-4-1.3-6.8-2.6-8.5-3.9l4.2-7.6c3.6,2.2,8.2,4,14,5.5s11.6,2.2,17.8,2.2,13-1.1,17-3.5c3.9-2.3,5.8-5.6,5.8-9.9,0-7.1-5.5-11.3-16.6-12.6l-17.1-2c-8-.9-14.2-3.1-18.4-6.7-4.3-3.5-6.5-8.2-6.5-14s2.8-11.9,8.5-15.7,13.8-5.6,24.3-5.6,10.8.5,15.5,1.4c4.7,1,8.6,2.2,11.5,3.9,2.9,1.6,4.4,3.5,4.4,5.6s-.3,2-.9,3.1c-.6,1-1.5,1.9-2.5,2.5-2.6-2.4-6.7-4.4-12.3-5.9-5.6-1.5-11.4-2.3-17.2-2.3s-12.1,1.1-15.8,3.2c-3.7,2.2-5.6,5.3-5.6,9.4,0,6.8,5.2,10.8,15.8,12l17.1,2c17.5,2,26.2,8.8,26.2,20.5Z"/>
+        </g>
+      </svg>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#recursos">Recursos</a></li>
+      <li><a href="#como">Como funciona</a></li>
+      <li><a href="#planos">Planos</a></li>
+      <li><a href="#duvidas">Dúvidas</a></li>
+    </ul>
+    <a class="btn btn-primary" href="#planos">
+      Testar 3 dias grátis
+      <span class="cap" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+  </nav>
+</div>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero" id="topo">
+  <div class="wrap">
+    <span class="eyebrow rv in"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M17 7h4v4"/></svg> Para clínicas que investem em anúncios</span>
+    <h1 class="rv in">Descubra quanto <em>cada origem</em><br>devolveu em receita</h1>
+    <p class="sub rv in">Registre os fechamentos da clínica em um minuto e veja, por origem, o retorno real do que você investe. CAC, ROAS e ROI calculados sozinhos, todo mês.</p>
+    <div class="cta-row rv in">
+      <a class="btn btn-lg btn-primary" href="#planos">
+        Testar 3 dias grátis
+        <span class="cap" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="btn btn-lg btn-ghost" href="#como">Ver como funciona</a>
+    </div>
+    <div class="trust rv in">
+      <span><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Sem cartão de crédito</span>
+      <span><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Sem fidelidade</span>
+      <span><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Em conformidade com a LGPD</span>
+    </div>
+
+    <div class="panel-out rv in">
+      <div class="panel" id="sim">
+        <div class="panel-top">
+          <h3 id="sim-title">Painel da clínica</h3>
+          <span class="tag">Simulação · dados de exemplo</span>
+        </div>
+
+        <div class="sim-nav" role="tablist" aria-label="Etapas da simulação">
+          <button role="tab" aria-selected="true" data-step="0">
+            <span class="sn">1</span>Painel<span class="bar"><i></i></span>
+          </button>
+          <button role="tab" aria-selected="false" data-step="1">
+            <span class="sn">2</span>Novo fechamento<span class="bar"><i></i></span>
+          </button>
+          <button role="tab" aria-selected="false" data-step="2">
+            <span class="sn">3</span>Relatório<span class="bar"><i></i></span>
+          </button>
+        </div>
+
+        <div class="stage">
+
+          <!-- 1 · painel -->
+          <div class="screen is-on" data-screen="0">
+            <div class="mrow4">
+              <div class="metric"><div class="k">Faturamento</div><div class="v" data-to="87380" data-fmt="brl0">R$ 87.380</div></div>
+              <div class="metric"><div class="k">Fechamentos</div><div class="v" data-to="33" data-fmt="int">33</div></div>
+              <div class="metric"><div class="k">Ticket médio</div><div class="v" data-to="2648" data-fmt="brl0">R$ 2.648</div></div>
+              <div class="metric"><div class="k">Custo/mensagem</div><div class="v" data-to="25.36" data-fmt="brl2">R$ 25,36</div></div>
+            </div>
+            <div class="chart" aria-hidden="true">
+              <i style="--h:38%"></i><i style="--h:52%"></i><i style="--h:44%"></i><i style="--h:63%"></i>
+              <i style="--h:57%"></i><i style="--h:71%"></i><i style="--h:82%"></i><i class="last" style="--h:100%"></i>
+            </div>
+            <div class="chart-x" aria-hidden="true">
+              <span>jan</span><span>fev</span><span>mar</span><span>abr</span>
+              <span>mai</span><span>jun</span><span>jul</span><span>ago</span>
+            </div>
+          </div>
+
+          <!-- 2 · novo fechamento -->
+          <div class="screen" data-screen="1" aria-hidden="true">
+            <div class="frow">
+              <span class="fl">Paciente</span>
+              <span class="fv"><span class="typed"><span id="sim-name">Marina Alves</span><i class="caret"></i></span></span>
+            </div>
+            <div class="frow">
+              <span class="fl">Origem</span>
+              <span class="fv"><span class="chipx">Instagram Ads</span></span>
+            </div>
+            <div class="frow">
+              <span class="fl">Atendimento</span>
+              <span class="fv">Consulta em consultório <em>R$ 350,00</em></span>
+            </div>
+            <div class="frow">
+              <span class="fl">Serviço adicional</span>
+              <span class="fv">Preenchimento facial <em>R$ 2.400,00</em></span>
+            </div>
+            <div class="frow">
+              <span class="fl">Pagamento</span>
+              <span class="fv"><span class="chipx ok">Pix · desconto aplicado</span></span>
+            </div>
+            <div class="total">
+              <span>Faturamento calculado</span>
+              <strong data-to="2610" data-fmt="brl2">R$ 2.610,00</strong>
+            </div>
+          </div>
+
+          <!-- 3 · relatório -->
+          <div class="screen" data-screen="2" aria-hidden="true">
+            <div class="orow">
+              <div class="ohead">Instagram Ads <span class="otag">paga</span></div>
+              <div class="ov">R$ 39.480</div>
+              <div class="track"><i style="--w:100%"></i></div>
+              <div class="om">14 fechamentos · investimento R$ 4.200 · CAC R$ 300 · ROAS 9,4x</div>
+            </div>
+            <div class="orow org">
+              <div class="ohead">Indicação <span class="otag">orgânica</span></div>
+              <div class="ov">R$ 27.500</div>
+              <div class="track"><i style="--w:70%"></i></div>
+              <div class="om">11 fechamentos · fora do cálculo de CAC e ROAS</div>
+            </div>
+            <div class="orow">
+              <div class="ohead">Google Ads <span class="otag">paga</span></div>
+              <div class="ov">R$ 20.400</div>
+              <div class="track"><i style="--w:52%"></i></div>
+              <div class="om">8 fechamentos · investimento R$ 2.800 · CAC R$ 350 · ROAS 7,3x</div>
+            </div>
+          </div>
+
+        </div>
+
+        <p class="sim-foot">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></svg>
+          <span>CAC e ROAS consideram apenas origens pagas — a receita de indicação nunca entra na conta.</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== RECURSOS ===================== -->
+<section id="recursos" class="tint">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="eyebrow"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></svg> Recursos</span>
+      <h2>A camada financeira que falta no seu sistema de gestão</h2>
+      <p>Não é agenda nem prontuário. É o que responde de onde veio cada paciente e quanto ele deixou no caixa.</p>
+    </div>
+    <div class="cards">
+      <div class="card rv">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></div>
+        <h3>Painel do mês</h3>
+        <p>Faturamento, consultas, ticket médio e custo por mensagem. Filtre por origem e compare mês a mês.</p>
+      </div>
+      <div class="card rv">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+        <h3>Faturamento calculado</h3>
+        <p>O valor sai do catálogo da clínica, com desconto do Pix aplicado sozinho. Ninguém digita total.</p>
+      </div>
+      <div class="card rv">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M20.6 3.4A10 10 0 003.4 20.6"/><path d="M2 22l1.4-5.1 5.1 1.4"/><path d="M8 12a4 4 0 008 0"/></svg></div>
+        <h3>Investimento e mensagens</h3>
+        <p>Informe uma vez por mês quanto foi para cada canal. É daí que saem o CAC e o ROI.</p>
+      </div>
+      <div class="card rv">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+        <h3>Relatório mensal pronto</h3>
+        <p>Resumo automático com receita por origem e serviços mais rentáveis. Sem montar planilha.</p>
+      </div>
+      <div class="card rv">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M7 7h10v10H7z"/><path d="M3 3h4v4H3zM17 17h4v4h-4z"/></svg></div>
+        <h3>Origens que você cria</h3>
+        <p>Instagram, Google, indicação, parceria, evento. Cada uma marcada como paga ou orgânica.</p>
+      </div>
+      <div class="card rv">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.9"/></svg></div>
+        <h3>Equipe e acessos</h3>
+        <p>Convite por link seguro, papéis definidos e dados isolados por clínica no banco de dados.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== COMO FUNCIONA ===================== -->
+<section id="como">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="eyebrow"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8.5l6 3.5-6 3.5V8.5z"/></svg> Como funciona</span>
+      <h2>Três etapas. A terceira acontece sozinha.</h2>
+    </div>
+    <div class="steps">
+      <div class="step rv">
+        <div class="n">1</div>
+        <h3>Cadastre a clínica</h3>
+        <p>Tipos de atendimento com valor normal e no Pix, serviços adicionais e as origens que você usa.</p>
+      </div>
+      <div class="step rv">
+        <div class="n">2</div>
+        <h3>Lance os fechamentos</h3>
+        <p>Paciente, origem, atendimento e forma de pagamento. O faturamento é calculado na hora.</p>
+      </div>
+      <div class="step rv">
+        <div class="n">3</div>
+        <h3>Leia o resultado</h3>
+        <p>O painel e o relatório mensal passam a mostrar receita por origem, CAC, ROAS e ROI.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== MÉTRICAS ===================== -->
+<section id="metricas" class="dark">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="eyebrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18"/><path d="M6 20v-7M12 20V5M18 20v-4"/></svg> As métricas</span>
+      <h2>Três números que decidem o orçamento</h2>
+      <p>O sistema calcula os três sozinho, todo mês. Os valores abaixo são do Instagram Ads na simulação do topo da página.</p>
+    </div>
+    <div class="defs">
+      <div class="def rv">
+        <div class="lbl">CAC</div>
+        <div class="val">R$ 300</div>
+        <div class="name">Custo de aquisição</div>
+        <div class="calc">R$ 4.200 investidos ÷ 14 fechamentos</div>
+        <p>Quanto custou, em anúncios, cada paciente que fechou por um canal pago.</p>
+      </div>
+      <div class="def rv">
+        <div class="lbl">ROAS</div>
+        <div class="val">9,4x</div>
+        <div class="name">Retorno sobre o anúncio</div>
+        <div class="calc">R$ 39.480 de receita ÷ R$ 4.200 investidos</div>
+        <p>Quantas vezes o valor investido voltou em receita.</p>
+      </div>
+      <div class="def rv">
+        <div class="lbl">ROI</div>
+        <div class="val">840%</div>
+        <div class="name">Retorno sobre investimento</div>
+        <div class="calc">(R$ 39.480 − R$ 4.200) ÷ R$ 4.200</div>
+        <p>O retorno já descontado o que foi gasto. Diz se valeu a pena.</p>
+      </div>
+    </div>
+    <div class="rule-note rv">
+      <span class="eyebrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg> A regra</span>
+      <h3>Receita orgânica nunca entra no cálculo da mídia paga</h3>
+      <p>Se o paciente veio por indicação, a receita dele conta no faturamento — mas fica de fora do CAC, do ROAS e do ROI. Do contrário, o anúncio levaria crédito por uma venda que não trouxe.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PLANOS ===================== -->
+<section id="planos">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="eyebrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h7.2L21 13.8 13.8 21 3 10.2V3z"/><circle cx="7.3" cy="7.3" r="1.4"/></svg> Planos</span>
+      <h2>Um preço por clínica, com tudo incluído</h2>
+      <p>Sem cobrança por usuário e sem recurso bloqueado. A cobrança é única pelo período contratado.</p>
+    </div>
+    <div class="pricing-out rv">
+      <div class="pricing">
+        <div class="periods" role="tablist" aria-label="Período do plano">
+          <button role="tab" aria-selected="false" data-plan="0">
+            <span class="pname">Trimestral</span><span class="pval">R$ 69,97</span><span class="off"></span>
+          </button>
+          <button role="tab" aria-selected="false" data-plan="1">
+            <span class="pname">Semestral</span><span class="pval">R$ 54,98</span><span class="off">−21%</span>
+          </button>
+          <button role="tab" aria-selected="true" data-plan="2">
+            <span class="pname">Anual</span><span class="pval">R$ 40,91</span><span class="off">−42%</span>
+          </button>
+        </div>
+
+        <div class="price">
+          <div class="eq"><span id="p-eq">R$ 40,91</span> <span class="per">/mês</span></div>
+          <p class="full" id="p-full">R$ 490,90 cobrados uma vez, por 12 meses</p>
+          <span class="save" id="p-save">42% mais barato que o trimestral</span>
+        </div>
+
+        <ul class="incl">
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Fechamentos ilimitados</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> CAC, ROAS, ROI e ticket médio</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Relatório mensal automático</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Equipe inteira, sem cobrança por usuário</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Suporte por WhatsApp</li>
+        </ul>
+
+        <a class="btn btn-lg btn-primary" href="/cadastro">
+          Testar 3 dias grátis
+          <span class="cap" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+        <p class="pay-note">Sem cartão de crédito. Prefere ativar agora? <a id="p-wa" href="https://wa.me/558398788088" target="_blank" rel="noopener">Fale no WhatsApp</a>.</p>
+      </div>
+    </div>
+    <p class="plans-foot rv">A cobrança é única pelo período contratado, e não há fidelidade.</p>
+  </div>
+</section>
+
+<!-- ===================== DÚVIDAS ===================== -->
+<section id="duvidas" class="tint">
+  <div class="mid">
+    <div class="head rv">
+      <span class="eyebrow"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.5 2.5 0 014.9.6c0 1.7-2.5 2.1-2.5 3.6"/><path d="M12 17.2h.01"/></svg> Dúvidas</span>
+      <h2>Perguntas frequentes</h2>
+    </div>
+    <div class="faq rv">
+      <details open>
+        <summary>O DocLytics substitui meu sistema de gestão?</summary>
+        <div class="a">Não. Ele não tem agenda, prontuário nem estoque. O DocLytics responde o que esses sistemas costumam deixar de fora: de qual origem veio cada paciente que fechou e qual o retorno do que você investe em anúncios. A maioria das clínicas usa os dois em paralelo.</div>
+      </details>
+      <details>
+        <summary>Quanto tempo leva para lançar um fechamento?</summary>
+        <div class="a">Cerca de um minuto. Como os atendimentos e serviços já ficam cadastrados com seus valores, a recepção seleciona o que foi feito e o sistema calcula o faturamento, inclusive o desconto à vista no Pix.</div>
+      </details>
+      <details>
+        <summary>Preciso configurar algo técnico para começar?</summary>
+        <div class="a">Não. O investimento do mês e as mensagens recebidas você informa uma vez por mês, em poucos minutos, e isso já basta para o sistema calcular CAC, ROI e custo por mensagem. Ou seja: dá para cadastrar a clínica e ver o primeiro resultado no mesmo dia, sem depender de TI.</div>
+      </details>
+      <details>
+        <summary>Por que a receita de indicação não conta no ROAS?</summary>
+        <div class="a">Porque ela não foi gerada pelo anúncio. Se entrasse na conta, o retorno da mídia paga apareceria inflado e você decidiria orçamento em cima de um número falso. Essa receita continua somando no faturamento total e aparece no relatório por origem.</div>
+      </details>
+      <details>
+        <summary>Quem cuida do meu marketing pode acompanhar os resultados?</summary>
+        <div class="a">Pode. Seja um profissional interno ou uma agência, basta convidá-lo como usuário da clínica. Ele passa a ver o painel e o relatório com a receita real por origem — costuma ser a melhor prova de que o trabalho de mídia está funcionando. O acesso é revogável a qualquer momento.</div>
+      </details>
+      <details>
+        <summary>Como funciona o teste grátis?</summary>
+        <div class="a">A primeira clínica cadastrada ganha 3 dias de acesso completo, sem cartão de crédito. Ao fim do período você escolhe um plano para continuar, e seus dados permanecem guardados.</div>
+      </details>
+      <details>
+        <summary>Meus dados ficam seguros?</summary>
+        <div class="a">O isolamento entre clínicas é aplicado no próprio banco de dados a cada consulta, não apenas na tela. As ações administrativas ficam registradas em auditoria, e o tratamento dos dados segue a LGPD.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CTA FINAL ===================== -->
+<section class="final">
+  <div class="mid rv">
+    <span class="eyebrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5z"/></svg> Comece hoje</span>
+    <h2>No fim do mês, você vai saber.</h2>
+    <p>Cadastre a clínica, lance os fechamentos da semana e veja o primeiro relatório com dados reais — os seus.</p>
+    <div class="cta-row">
+      <a class="btn btn-lg btn-primary" href="https://wa.me/558398788088?text=Ol%C3%A1!%20Quero%20testar%20o%20DocLytics%20na%20minha%20cl%C3%ADnica." target="_blank" rel="noopener">
+        Testar 3 dias grátis
+        <span class="cap" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="btn btn-lg btn-ghost" href="#planos">Ver planos</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap f-in">
+    <span class="logo" style="color:var(--primary);"><svg viewBox="130 425 850 275" style="height:34px;" role="img" aria-label="DocLytics"><g transform="translate(3421.2 0)" fill="currentColor"><path d="M-3145.3,542.5v123.4c0,3-1.5,5.9-3.6,7.8s-.4.3-.6.5l-4,2.5c-2.9,1.8-6.2,2.4-9.6,1.3s-.2,0-.4-.1l-46.1-20.5-54.8-23.7c-.2,0-.3-.1-.5-.2-5-3-8.6-8.3-8.6-14.2v-145c0-.1,0-.3,0-.4.4-4,2.8-6.7,6.2-8.4,2.8-1.5,6.1-2.9,9.4-1.5l58.7,25.3,21.9,9.4c.6.3.9.7.9,1.3v11.6c.2,8.9,6.7,19.8,15.2,23.4l14.5,6.1c.6.2,1.3.5,1.3,1.5ZM-3210.3,628.5v-6.2c0-.5.5-.7.9-.7,8.2.8,15-2.3,17.6-10.3,2.1-6.3,1.2-13.1-2-19s-4.5-6.3-7.6-8.8-.2-.1-.3-.2l-6.3-4.3c0,0-.1,0-.2-.1l-8.1-4.9c-5.1-3.1-9.2-8.3-7.7-14.4.7-2.8,2.9-4.9,5.9-4.9,7.6,0,14.2,5.4,15.9,12.8.2,1,1.2,1.4,2,1.4l6.3-.2c.9,0,1.8-.8,1.6-1.8-1.3-9-7.8-16.1-15.8-20.3s-2.1-2-2.1-3.4v-5c0-.7-.5-1.7-1.2-1.9l-5.3-1.9c-.9-.3-1.8.4-1.8,1.3v3.9c0,2.1-1.7,3.8-3.8,3.8h0c-.1,0-.2,0-.3,0-7.4.8-11.7,6.6-12.4,13.8s1.9,15.2,7.2,20.8c2.5,2.7,5.4,4.8,8.6,6.7l7.2,4.2c5.6,3.3,11,8,10.3,14.8s-2.4,5.8-5.6,6.3c-2.5.5-5,0-7.4-.8-6.7-2.1-11.5-7.4-13-14.3-.2-1.1-1.1-1.7-2.2-1.7h-6.1c-2.7,0-1.4,4-.3,7.1,2.7,7.8,8.2,14.1,15.5,17.9,1.3.7,2.1,2,2.1,3.4v5c0,1,1,1.6,1.9,1.9l4.4,1.5c1,.3,1.9-.5,1.9-1.6Z"/><path d="M-3136.6,658.8v-121.1c0-1.8-1.4-2.6-2.7-3.2l-15.5-6.3c-7.7-3.2-12.9-10.8-13.2-19.1v-13.4c0-1.1-.5-2.5-1.6-2.9l-25.4-11.2-46.8-20.5c-1.4-.6-2.3-2-2.3-3.6v-1.8c0-3.7,2.6-6,5.7-7.5s6-2.8,9.3-1.4l59.6,25.6,46.6,20.1c5.8,2.5,8.7,9,8.7,14.9v4.4s0,134,0,134c0,3.7-2.2,7.2-5.3,8.9l-10.4,6c-2.4,1.4-6.6.5-6.6-1.8Z"/><path d="M-3101.2,642.9c-1.7,1-4.9,1.2-4.9-.7v-139.2c0-6.7-3-12.7-8.9-16s-.2-.1-.4-.2l-37.9-16.3-60.5-25.8c-1.4-.6-2.3-2-2.4-3.5v-.8c0-3.8,2.1-6.3,5.3-7.8s5.3-2.5,8.2-1.3l59.5,25.2,43.7,18.5c6.3,2.7,9.9,8.6,9.9,15.5v139.7c0,3.5-1.8,6.8-4.6,8.5l-6.9,4.1Z"/><path d="M-2965.2,552.8c0,9-1.6,16.8-4.9,23.2-3.3,6.5-7.8,11.5-13.7,14.9-5.9,3.5-12.9,5.2-21,5.2s-15.4-1.7-21.6-5.1c-6.2-3.4-11.1-8.1-14.5-14.1-3.5-6-5.2-12.8-5.2-20.5s1.7-14.5,5.1-20.5c3.4-5.9,8-10.6,13.8-14.1,5.8-3.4,12.3-5.2,19.5-5.2s10.4,1,14.8,3.1c4.4,2.1,7.9,4.9,10.7,8.5v-36.8c0-2.6.8-4.6,2.5-5.9,1.7-1.4,3.9-2,6.6-2s2.9.1,4.4.4c1.5.3,2.7.7,3.6,1.2v67.6ZM-3022,538.5c-4.3,4.5-6.5,10.4-6.5,17.7s2.2,13.2,6.5,17.7c4.4,4.5,9.9,6.8,16.6,6.8s12.4-2.2,16.7-6.8,6.5-10.4,6.5-17.7-2.2-13.2-6.5-17.7-9.9-6.8-16.7-6.8-12.2,2.2-16.6,6.8Z"/><path d="M-2950.7,576.6c-3.7-6-5.5-12.8-5.5-20.2s1.8-14.3,5.5-20.3c3.6-6,8.6-10.7,14.8-14.2,6.2-3.5,13.2-5.2,21-5.2s14.8,1.8,21.1,5.2c6.2,3.5,11.2,8.2,14.8,14.2,3.6,6,5.4,12.8,5.4,20.3s-1.8,14.2-5.4,20.2c-3.6,6-8.5,10.8-14.8,14.2-6.3,3.5-13.3,5.2-21.1,5.2s-14.8-1.8-21-5.2c-6.2-3.5-11.1-8.2-14.8-14.2ZM-2894.5,569.2c2-3.8,3-8,3-12.8s-1-9.1-3-12.8c-2-3.8-4.8-6.7-8.3-8.8-3.6-2.1-7.6-3.1-12.1-3.1s-8.5,1-12.1,3.1c-3.6,2.1-6.3,5-8.3,8.8-2,3.8-3,8-3,12.8s1,9.1,3,12.8c2,3.8,4.8,6.7,8.3,8.8,3.5,2.1,7.6,3.2,12.1,3.2s8.5-1.1,12.1-3.2c3.5-2.1,6.3-5,8.3-8.8Z"/><path d="M-2861,535.8c3.3-6,8.2-10.7,14.5-14.1,6.3-3.4,13.8-5.1,22.5-5.1s9.5.6,13.6,1.7c4,1.2,7.2,2.7,9.4,4.7,2.2,1.9,3.3,4,3.3,6.3s-.5,3.2-1.6,4.9-2.5,3.2-4.3,4.6c-2.5-2.3-5.5-4.1-9.1-5.3-3.6-1.2-7.3-1.9-11.3-1.9-7.3,0-13.2,2.2-17.5,6.5-4.4,4.4-6.6,10.4-6.6,18.1s2.2,13.6,6.7,18.1c4.4,4.5,10.5,6.7,18.1,6.7s13-1.7,18.6-5.1l7.2,12.8c-8.3,5-17.5,7.5-27.8,7.5s-15.2-1.6-21.3-4.9c-6.1-3.2-10.9-7.8-14.2-13.7-3.4-5.9-5.1-12.8-5.1-20.8s1.7-14.9,5-20.9Z"/><path d="M-2781.1,594h-9.9v-105.5c0-3.4,1.8-5.1,5.4-5.1s3.3.4,4.5,1v109.5Z"/><path d="M-2696.5,588.6c0,12.1-3.2,21.3-9.6,27.5-6.4,6.2-15.9,9.4-28.4,9.4s-10-.5-15.3-1.3c-5.3-.9-9.9-2.1-13.8-3.6l2.8-7.8c3.5,1.3,7.7,2.3,12.6,3.2,4.9.8,9.4,1.2,13.5,1.2,9.8,0,17-2.3,21.5-6.8,4.5-4.6,6.8-11.2,6.8-20v-6.9c-1.9,3.9-5.1,7-9.7,9.3-4.6,2.3-10.1,3.5-16.6,3.5-10.1,0-18.3-2.8-24.5-8.4-6.2-5.6-9.3-13.4-9.3-23.4v-39.3c0-3.4,1.8-5.1,5.4-5.1s3.5.4,4.5,1.1v41.2c0,8.3,2.1,14.6,6.2,18.9,4.1,4.3,10.2,6.4,18.1,6.4s14.6-2.3,19-7c4.4-4.7,6.6-11.3,6.6-19.9v-35.7c0-3.4,1.8-5.1,5.4-5.1s3.5.4,4.5,1.1v67.7Z"/><path d="M-2681.7,504.9c0-3.4,1.8-5.1,5.4-5.1s3.3.4,4.5,1.1v19h26.4c3.7,0,5.6,1.6,5.6,5s-.3,2.7-.9,4h-31v43.5c0,4.9,1.3,8.7,3.9,11.3,2.6,2.7,6.3,4,11.2,4s10.5-1.4,15-4.3l4.4,6.4c-2.5,1.9-5.7,3.4-9.5,4.6-3.9,1.1-7.8,1.7-11.8,1.7-7.2,0-12.9-2-17-5.9-4.1-3.9-6.2-9.3-6.2-16.2v-69.1Z"/><path d="M-2631.7,499c-1.4-1.4-2-3.2-2-5.2s.7-3.7,2-5.2c1.3-1.4,3.1-2.2,5.2-2.2s3.8.7,5.2,2.2c1.4,1.5,2,3.2,2,5.2s-.7,3.7-2,5.2c-1.3,1.5-3.1,2.2-5.2,2.2s-3.8-.7-5.2-2.2ZM-2621.5,594h-9.9v-69c0-3.4,1.8-5.1,5.4-5.1s3.3.4,4.5,1.1v73Z"/><path d="M-2604.2,577.5c-3.2-5.9-4.7-12.7-4.7-20.4s1.7-15.1,5-20.9c3.3-5.8,7.9-10.4,13.9-13.6,5.9-3.2,12.9-4.8,20.8-4.8s9.2.5,13.6,1.6c4.4,1,7.4,2.3,9.1,3.7,1.7,1.4,2.5,3,2.5,4.7s-1.1,4-3.3,5.7c-2.5-2.2-5.7-3.9-9.6-5.2-3.9-1.2-8.1-1.9-12.5-1.9-8.9,0-15.9,2.7-21.1,8-5.2,5.4-7.7,12.8-7.7,22.4s2.7,17.2,8.1,22.7c5.4,5.4,12.9,8.1,22.5,8.1s13.4-1.6,19.2-4.9l4,7.3c-3.9,2.2-8,3.8-12.1,4.7-4.2.9-8.5,1.4-12.8,1.4-8.3,0-15.4-1.6-21.3-4.9-5.9-3.2-10.4-7.8-13.6-13.7Z"/><path d="M-2472.6,573.2c0,7-3,12.6-9,16.7s-14,6.2-23.9,6.2-9.5-.5-14.5-1.4c-5-.9-9.4-2-13.3-3.3-4-1.3-6.8-2.6-8.5-3.9l4.2-7.6c3.6,2.2,8.2,4,14,5.5s11.6,2.2,17.8,2.2,13-1.1,17-3.5c3.9-2.3,5.8-5.6,5.8-9.9,0-7.1-5.5-11.3-16.6-12.6l-17.1-2c-8-.9-14.2-3.1-18.4-6.7-4.3-3.5-6.5-8.2-6.5-14s2.8-11.9,8.5-15.7,13.8-5.6,24.3-5.6,10.8.5,15.5,1.4c4.7,1,8.6,2.2,11.5,3.9,2.9,1.6,4.4,3.5,4.4,5.6s-.3,2-.9,3.1c-.6,1-1.5,1.9-2.5,2.5-2.6-2.4-6.7-4.4-12.3-5.9-5.6-1.5-11.4-2.3-17.2-2.3s-12.1,1.1-15.8,3.2c-3.7,2.2-5.6,5.3-5.6,9.4,0,6.8,5.2,10.8,15.8,12l17.1,2c17.5,2,26.2,8.8,26.2,20.5Z"/></g></svg></span>
+    <div class="f-links">
+      <a href="#recursos">Recursos</a>
+      <a href="#como">Como funciona</a>
+      <a href="#planos">Planos</a>
+      <a href="/termos">Termos de uso</a>
+      <a href="/privacidade">Privacidade</a>
+    </div>
+    <div class="f-legal">
+      <span>© 2026 DocLytics</span>
+      <span class="dev">Desenvolvido por Showa Marketing LTDA · CNPJ 47.707.966/0001-27</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---- reveal ---- */
+  var items = document.querySelectorAll(".rv:not(.in)");
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: .08 });
+    items.forEach(function(el, i){
+      el.style.transitionDelay = (Math.min(i % 3, 2) * 80) + "ms";
+      io.observe(el);
+    });
+  } else {
+    items.forEach(function(el){ el.classList.add("in"); });
+  }
+
+  /* ================= simulação do produto (hero) ================= */
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var FMT = {
+    brl0: function(v){ return v.toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0}); },
+    brl2: function(v){ return v.toLocaleString("pt-BR",{style:"currency",currency:"BRL",minimumFractionDigits:2,maximumFractionDigits:2}); },
+    int:  function(v){ return String(Math.round(v)); }
+  };
+
+  var DUR = [3800, 6600, 5200];            /* quanto cada tela fica no ar */
+  var TITLES = ["Painel da clínica", "Novo fechamento", "Relatório do mês"];
+  var NAME = "Marina Alves";
+
+  var sim = document.getElementById("sim");
+  if (sim) {
+    var simTitle = document.getElementById("sim-title"),
+        simName  = document.getElementById("sim-name"),
+        screens  = sim.querySelectorAll(".screen"),
+        navBtns  = sim.querySelectorAll(".sim-nav button");
+
+    var timers = [], runId = 0, autoId = null, paused = false, cur = 0;
+
+    function stop(){ timers.forEach(clearTimeout); timers = []; clearTimeout(autoId); }
+
+    /* contagem crescente, cancelável pelo runId */
+    function countUp(el, to, fmt, dur){
+      if (reduce) { el.textContent = fmt(to); return; }
+      var mine = runId, t0 = null;
+      requestAnimationFrame(function step(t){
+        if (mine !== runId) return;
+        if (t0 === null) t0 = t;
+        var p = Math.min((t - t0) / dur, 1);
+        el.textContent = fmt(to * (1 - Math.pow(1 - p, 3)));
+        if (p < 1) requestAnimationFrame(step);
+      });
+    }
+
+    /* Não zeramos aqui: o HTML já traz o valor final, então numa aba em segundo
+       plano (onde o rAF não roda) o número aparece certo em vez de travar em zero. */
+    function countAll(screen, delay){
+      screen.querySelectorAll("[data-to]").forEach(function(el){
+        var to = parseFloat(el.dataset.to), fmt = FMT[el.dataset.fmt] || FMT.int;
+        timers.push(setTimeout(function(){ countUp(el, to, fmt, 900); }, delay));
+      });
+    }
+
+    function typeName(delay){
+      if (reduce) { simName.textContent = NAME; return; }
+      var i = 0;
+      timers.push(setTimeout(function tick(){
+        simName.textContent = NAME.slice(0, ++i);   /* só apaga quando vai de fato digitar */
+        if (i < NAME.length) timers.push(setTimeout(tick, 62));
+      }, delay));
+    }
+
+    function play(i){
+      stop(); runId++; cur = i;
+
+      screens.forEach(function(s, k){
+        s.classList.toggle("is-on", k === i);
+        s.setAttribute("aria-hidden", k === i ? "false" : "true");
+      });
+
+      navBtns.forEach(function(b, k){
+        b.setAttribute("aria-selected", k === i ? "true" : "false");
+        var fill = b.querySelector(".bar i");
+        fill.style.transition = "none";
+        fill.style.transform = "scaleX(0)";
+      });
+
+      simTitle.textContent = TITLES[i];
+
+      /* barra de progresso da etapa atual */
+      var fill = navBtns[i].querySelector(".bar i");
+      requestAnimationFrame(function(){
+        if (reduce) { fill.style.transform = "scaleX(1)"; return; }
+        fill.style.transition = "transform " + DUR[i] + "ms linear";
+        fill.style.transform = "scaleX(1)";
+      });
+
+      if (i === 0) countAll(screens[0], 250);
+      if (i === 1) { typeName(300); countAll(screens[1], 3150); }
+
+      schedule();
+    }
+
+    function schedule(){
+      clearTimeout(autoId);
+      if (reduce || paused || document.hidden) return;
+      autoId = setTimeout(function(){ play((cur + 1) % screens.length); }, DUR[cur]);
+    }
+
+    navBtns.forEach(function(b){
+      b.addEventListener("click", function(){ play(Number(b.dataset.step)); });
+    });
+
+    /* pausa ao passar o mouse e quando a aba sai de foco */
+    sim.addEventListener("mouseenter", function(){ paused = true; clearTimeout(autoId); });
+    sim.addEventListener("mouseleave", function(){ paused = false; schedule(); });
+    document.addEventListener("visibilitychange", function(){
+      if (document.hidden) clearTimeout(autoId); else schedule();
+    });
+
+    play(0);
+  }
+
+  /* ---- planos: mesmos valores e fórmulas de plans.ts ---- */
+  var PLANS = [
+    { name:"Trimestral", price:209.90, months:3  },
+    { name:"Semestral",  price:329.90, months:6  },
+    { name:"Anual",      price:490.90, months:12 }
+  ];
+  var money = function(v){
+    return v.toLocaleString("pt-BR",{ style:"currency", currency:"BRL", minimumFractionDigits:2, maximumFractionDigits:2 });
+  };
+  var monthly = function(p){ return p.price / p.months; };
+  var savings = function(p){
+    var pct = Math.round((1 - monthly(p) / monthly(PLANS[0])) * 100);
+    return pct > 0 ? pct : null;
+  };
+
+  var pEq = document.getElementById("p-eq"),
+      pFull = document.getElementById("p-full"),
+      pSave = document.getElementById("p-save"),
+      pWa = document.getElementById("p-wa");
+
+  function renderPlan(i){
+    var p = PLANS[i], pct = savings(p);
+    pEq.textContent = money(monthly(p));
+    pFull.textContent = money(p.price) + " cobrados uma vez, por " + p.months + " meses";
+    pSave.textContent = pct ? pct + "% mais barato que o trimestral" : "";
+    pWa.href = "https://wa.me/558398788088?text=" +
+      encodeURIComponent("Olá! Quero ativar o plano " + p.name + " do DocLytics.");
+  }
+
+  var pTabs = document.querySelectorAll(".periods button");
+
+  /* preços das abas saem do mesmo PLANS — um preço, um lugar para editar */
+  pTabs.forEach(function(btn){
+    var p = PLANS[Number(btn.dataset.plan)], pct = savings(p);
+    btn.querySelector(".pval").textContent = money(monthly(p));
+    btn.querySelector(".off").textContent = pct ? "−" + pct + "%" : "";
+  });
+
+  pTabs.forEach(function(btn){
+    btn.addEventListener("click", function(){
+      pTabs.forEach(function(b){ b.setAttribute("aria-selected","false"); });
+      btn.setAttribute("aria-selected","true");
+      renderPlan(Number(btn.dataset.plan));
+    });
+  });
+  renderPlan(2);
+})();
+</script>
