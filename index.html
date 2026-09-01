@@ -1,4 +1,4 @@
-<title>DocLytics</title>
+<title>Doclytics</title>
 <script>document.documentElement.classList.add("js");</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -6,7 +6,7 @@
 
 <style>
 /* ===========================================================
-   DocLytics — landing page
+   Doclytics — landing page
    Tema claro fixo (decisão de projeto: sem variante escura).
    Cores, tipografia e botões vindos do design system do app.
    =========================================================== */
@@ -200,7 +200,7 @@ section{padding:120px 0;}
 .stage{display:grid;} /* telas empilhadas na mesma célula: a altura é a da maior */
 .screen{
   grid-area:1/1;opacity:0;transform:translateY(10px);pointer-events:none;
-  transition:opacity .55s var(--ease),transform .55s var(--ease);
+  transition:opacity .42s var(--ease),transform .42s var(--ease);
 }
 .screen.is-on{opacity:1;transform:none;pointer-events:auto;}
 
@@ -234,11 +234,11 @@ section{padding:120px 0;}
   opacity:0;transform:translateY(6px);transition:opacity .5s var(--ease),transform .5s var(--ease);
 }
 .screen.is-on .frow{opacity:1;transform:none;}
-.screen.is-on .frow:nth-child(1){transition-delay:.15s}
-.screen.is-on .frow:nth-child(2){transition-delay:.85s}
-.screen.is-on .frow:nth-child(3){transition-delay:1.4s}
-.screen.is-on .frow:nth-child(4){transition-delay:1.95s}
-.screen.is-on .frow:nth-child(5){transition-delay:2.5s}
+.screen.is-on .frow:nth-child(1){transition-delay:.1s}
+.screen.is-on .frow:nth-child(2){transition-delay:.52s}
+.screen.is-on .frow:nth-child(3){transition-delay:.9s}
+.screen.is-on .frow:nth-child(4){transition-delay:1.28s}
+.screen.is-on .frow:nth-child(5){transition-delay:1.66s}
 .fl{font-size:.78rem;color:var(--faint);letter-spacing:.03em;flex-shrink:0;}
 .fv{font-size:.9rem;font-weight:500;text-align:right;display:flex;align-items:center;gap:10px;}
 .fv em{font-style:normal;color:var(--muted-fg);font-weight:450;font-variant-numeric:tabular-nums;}
@@ -253,7 +253,7 @@ section{padding:120px 0;}
   background:linear-gradient(150deg,#2a4a4a 0%,#1f3a3a 100%);
   opacity:0;transform:translateY(6px);transition:opacity .5s var(--ease),transform .5s var(--ease);
 }
-.screen.is-on .total{opacity:1;transform:none;transition-delay:3.05s;}
+.screen.is-on .total{opacity:1;transform:none;transition-delay:2.04s;}
 .total span{font-size:.8rem;color:rgba(255,255,255,.68);}
 .total strong{font-family:'Inter Tight',sans-serif;font-size:1.55rem;font-weight:600;letter-spacing:-.03em;font-variant-numeric:tabular-nums;}
 
@@ -270,8 +270,8 @@ section{padding:120px 0;}
   transform:scaleX(0);transform-origin:left;transition:transform .9s var(--ease);
 }
 .screen.is-on .track i{transform:scaleX(1);}
-.screen.is-on .orow:nth-child(2) .track i{transition-delay:.14s}
-.screen.is-on .orow:nth-child(3) .track i{transition-delay:.28s}
+.screen.is-on .orow:nth-child(2) .track i{transition-delay:.1s}
+.screen.is-on .orow:nth-child(3) .track i{transition-delay:.2s}
 .orow.org .track i{background:var(--faint);}
 .om{grid-column:1/-1;font-size:.75rem;color:var(--faint);font-variant-numeric:tabular-nums;}
 .otag{font-size:9px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;padding:2px 8px;border-radius:999px;
@@ -332,13 +332,16 @@ section{padding:120px 0;}
 .dark .wrap{position:relative;}
 
 /* ---------- métricas: o resultado é o herói do card ---------- */
-.defs{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch;}
+/* align-items:start para que abrir um card não estique os outros */
+.defs{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:start;}
 .def{
   display:flex;flex-direction:column;
   background:var(--white);border:1px solid var(--border);border-radius:20px;
   padding:36px 28px;text-align:center;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
+  transition:border-color .5s var(--ease);
 }
+.def:has(.more[open]){border-color:var(--border-strong);}
 .def .lbl{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:var(--faint);}
 .def .val{
   font-family:'Inter Tight',sans-serif;font-size:2.7rem;font-weight:600;letter-spacing:-.04em;
@@ -347,10 +350,66 @@ section{padding:120px 0;}
 .def .name{font-size:.88rem;color:var(--muted-fg);margin-top:14px;}
 /* a conta em Inter com numerais tabulares — sem família monoespaçada fora do design system */
 .def .calc{font-size:.79rem;color:var(--faint);margin-top:7px;font-variant-numeric:tabular-nums;}
-.def p{
+.def > p{
   color:var(--muted-fg);font-size:.89rem;
   margin-top:20px;padding-top:20px;border-top:1px solid var(--border);
+  min-height:76px; /* mantém os três botões na mesma altura quando fechados */
 }
+
+/* "Saiba mais" — <button> em vez de <summary>: sem marcador nativo duplicando a seta */
+.more-btn{
+  margin-top:20px;align-self:center;cursor:pointer;
+  display:inline-flex;align-items:center;gap:9px;
+  font-family:inherit;font-size:.82rem;font-weight:500;color:var(--primary-deep);
+  background:transparent;border:1px solid var(--border-strong);border-radius:999px;padding:8px 17px;
+  transition:border-color .45s var(--ease),background .45s var(--ease),transform .3s var(--ease);
+}
+.more-btn:hover{border-color:var(--primary-deep);background:rgba(255,255,255,.05);}
+.more-btn:active{transform:scale(.98);}
+.more-btn svg{
+  width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.2;
+  stroke-linecap:round;stroke-linejoin:round;transition:transform .45s var(--ease);
+}
+.more-btn:hover svg{transform:translateX(2px);}
+
+/* janela — <dialog> nativo: Esc fecha, foco fica preso dentro, sem biblioteca */
+dialog.modal{
+  width:min(560px,calc(100vw - 36px));max-height:min(82vh,760px);overflow-y:auto;
+  background:var(--white);color:var(--fg);
+  border:1px solid var(--border-strong);border-radius:22px;padding:32px 34px 30px;
+  box-shadow:0 40px 90px -30px rgba(0,0,0,.75);
+  text-align:left;
+}
+dialog.modal::backdrop{background:rgba(6,10,10,.72);}
+dialog.modal[open]{animation:modalIn .32s var(--ease);}
+@keyframes modalIn{from{opacity:0;transform:translateY(10px) scale(.99)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){dialog.modal[open]{animation:none;}}
+
+.modal-top{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;
+  padding-bottom:20px;border-bottom:1px solid var(--border);}
+.modal-top .lbl{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:var(--faint);}
+.modal-top h3{font-size:1.3rem;letter-spacing:-.025em;margin-top:8px;}
+.modal-top .num{
+  font-family:'Inter Tight',sans-serif;font-size:.9rem;color:var(--primary-deep);
+  margin-top:8px;font-variant-numeric:tabular-nums;
+}
+.modal-x{
+  flex-shrink:0;width:32px;height:32px;border-radius:999px;cursor:pointer;
+  background:transparent;border:1px solid var(--border);color:var(--muted-fg);
+  display:flex;align-items:center;justify-content:center;
+  transition:border-color .4s var(--ease),color .4s var(--ease);
+}
+.modal-x:hover{border-color:var(--border-strong);color:var(--fg);}
+.modal-x svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;}
+
+.modal-body{padding-top:22px;}
+.modal-body h4{
+  font-size:.68rem;text-transform:uppercase;letter-spacing:.15em;font-weight:600;
+  color:var(--faint);margin-bottom:8px;
+}
+.modal-body h4:not(:first-child){margin-top:22px;}
+.modal-body p{color:var(--muted-fg);font-size:.9rem;line-height:1.68;margin:0;}
+.modal-body strong{color:var(--fg);font-weight:600;}
 
 /* fecho da seção: tipográfico, sem virar um quarto card */
 .rule-note{
@@ -427,6 +486,9 @@ details summary::after{
 }
 details[open] summary::after{transform:translateY(-30%) rotate(-135deg);}
 details .a{padding:0 44px 26px 0;color:var(--muted-fg);font-size:.97rem;}
+details .a a{color:var(--primary);font-weight:500;border-bottom:1px solid rgba(51,102,102,.3);
+  transition:border-color .4s var(--ease);}
+details .a a:hover{border-bottom-color:var(--primary);}
 
 /* ---------- cta final ---------- */
 .final{text-align:center;padding:112px 0;}
@@ -474,13 +536,146 @@ footer{border-top:1px solid var(--border);padding:48px 0;font-size:.86rem;color:
   .btn-primary{padding-left:24px;}
   .trust{gap:14px;flex-direction:column;align-items:center;}
 }
-</style>
 
-<!-- ===================== NAV ===================== -->
+/* ============ troca de visualização (roteador de arquivo único) ============ */
+.view[hidden]{display:none;}
+
+/* ============ páginas legais ============ */
+.legal{line-height:1.75;}
+.legal .wrap{max-width:1000px;}
+.legal .doc{max-width:72ch;margin:0 auto;}
+/* :where() zera a especificidade do ancestral (0-0-1), então .btn-primary continua
+   mandando na cor do próprio texto — sem isso o botão sai verde sobre verde */
+:where(.legal) a{color:var(--primary);}
+
+.legal header.top{padding:72px 0 40px;border-bottom:1px solid var(--border);}
+.legal header.top h1{font-size:clamp(2rem,4.2vw,2.9rem);line-height:1.08;letter-spacing:-.035em;margin-top:22px;}
+.legal header.top .meta{color:var(--faint);font-size:.9rem;margin-top:16px;}
+
+.legal .toc{background:var(--bg-tint);border:1px solid var(--border);border-radius:16px;padding:24px 28px;margin:44px 0 0;}
+.legal .toc h2{font-size:.75rem;text-transform:uppercase;letter-spacing:.16em;color:var(--faint);margin-bottom:14px;font-weight:600;}
+.legal .toc ol{margin:0;padding-left:20px;columns:2;column-gap:34px;}
+.legal .toc li{font-size:.9rem;margin-bottom:7px;break-inside:avoid;}
+.legal .toc a{color:var(--muted-fg);text-decoration:none;}
+.legal .toc a:hover{color:var(--primary);}
+
+.legal article{padding:8px 0 40px;}
+.legal article h2{font-size:1.14rem;margin:46px 0 14px;display:flex;gap:12px;align-items:baseline;}
+.legal article h2 .n{color:var(--primary);font-variant-numeric:tabular-nums;font-weight:500;flex-shrink:0;}
+.legal article p{margin-bottom:14px;color:#22302e;}
+.legal article ul{margin:0 0 16px;padding-left:22px;list-style:disc;}
+.legal article li{margin-bottom:9px;color:#22302e;}
+.legal article li::marker{color:var(--faint);}
+.legal article strong{font-weight:600;color:var(--fg);}
+
+.legal .defbox{border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin:22px 0;background:var(--bg-tint);}
+.legal .defbox dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:10px 18px;font-size:.94rem;}
+.legal .defbox dt{font-weight:600;color:var(--primary-deep);}
+.legal .defbox dd{margin:0;color:#22302e;}
+
+.legal .alert{border:1px solid #e3d3b4;background:#fbf4e9;border-radius:14px;padding:20px 24px;margin:22px 0;
+  display:flex;gap:14px;align-items:flex-start;}
+.legal .alert svg{width:18px;height:18px;flex-shrink:0;margin-top:4px;stroke:var(--gold);fill:none;
+  stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.legal .alert p{color:#5b4a2e;margin-bottom:0;}
+
+.legal .pair{border-top:1px solid var(--border);padding:30px 0 0;margin-top:16px;
+  display:flex;gap:30px;flex-wrap:wrap;justify-content:center;}
+.legal .pair a{font-size:.93rem;font-weight:500;text-decoration:none;color:var(--primary);
+  border-bottom:1px solid transparent;transition:border-color .4s var(--ease);}
+.legal .pair a:hover{border-bottom-color:var(--primary);}
+
+@media (max-width:820px){
+  .legal .toc ol{columns:1;}
+  .legal header.top{padding:48px 0 32px;}
+}
+
+/* ============ guias ============ */
+.guide .lead{color:var(--muted-fg);font-size:1.06rem;margin-top:18px;}
+.guide .crumb{
+  display:inline-flex;align-items:center;font-size:.85rem;color:var(--muted-fg);
+  text-decoration:none;transition:color .4s var(--ease);
+}
+.guide .crumb:hover{color:var(--primary);}
+.guide header.top h1{font-size:clamp(1.9rem,3.8vw,2.6rem);}
+
+/* índice de guias */
+.guia-list{display:grid;gap:16px;margin:44px 0 0;}
+.guia-card{
+  display:block;text-decoration:none;background:var(--white);
+  border:1px solid var(--border);border-radius:20px;padding:28px 30px;
+  box-shadow:var(--shadow-soft);
+  transition:transform .6s var(--ease),box-shadow .6s var(--ease),border-color .6s var(--ease);
+}
+.guia-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-card);border-color:var(--border-strong);}
+.gc-top{display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.gc-top .lbl{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:var(--primary);}
+.gc-time{font-size:.76rem;color:var(--faint);}
+.guia-card h2{font-size:1.25rem;letter-spacing:-.025em;margin:14px 0 10px;}
+.guia-card p{color:var(--muted-fg);font-size:.93rem;margin-bottom:16px;}
+.gc-go{display:inline-flex;align-items:center;gap:8px;font-size:.86rem;font-weight:500;color:var(--primary);}
+.gc-go svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
+  transition:transform .5s var(--ease);}
+.guia-card:hover .gc-go svg{transform:translateX(3px);}
+
+/* elementos de artigo */
+.guide article h3{font-size:1rem;margin:26px 0 8px;letter-spacing:-.015em;}
+.guide .formula{
+  font-family:'Inter Tight',sans-serif;font-size:1rem;font-weight:500;letter-spacing:-.01em;
+  background:var(--bg-tint);border:1px solid var(--border);border-radius:12px;
+  padding:16px 20px;margin:20px 0;text-align:center;color:var(--primary-deep);
+  font-variant-numeric:tabular-nums;
+}
+.guide .key{
+  background:var(--primary-soft);border:1px solid rgba(51,102,102,.16);border-radius:14px;
+  padding:18px 22px;margin:22px 0;
+}
+.guide .key p{margin:0;color:var(--primary-deep);font-size:.94rem;}
+.guide .tabela{overflow-x:auto;margin:22px 0;border:1px solid var(--border);border-radius:14px;}
+.guide table{border-collapse:collapse;width:100%;font-size:.89rem;min-width:440px;}
+.guide th,.guide td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--border);}
+.guide thead th{
+  background:var(--bg-tint);font-weight:600;font-size:.74rem;text-transform:uppercase;
+  letter-spacing:.1em;color:var(--faint);white-space:nowrap;
+}
+.guide tbody tr:last-child td{border-bottom:0;}
+.guide td{color:#22302e;font-variant-numeric:tabular-nums;}
+
+.guia-cta{
+  background:var(--bg-tint);border:1px solid var(--border);border-radius:20px;
+  padding:34px;margin:48px 0 0;text-align:center;
+}
+.guia-cta h3{font-size:1.2rem;letter-spacing:-.025em;}
+.guia-cta p{color:var(--muted-fg);font-size:.96rem;margin:12px auto 22px;max-width:52ch;}
+
+@media (min-width:760px){ .guia-list{grid-template-columns:1fr;} }
+@media (max-width:600px){
+  .guide .formula{font-size:.88rem;padding:14px 16px;}
+  .guia-cta{padding:26px 20px;}
+}
+.modal-go{
+  display:inline-flex;align-items:center;gap:9px;margin-top:24px;
+  font-size:.88rem;font-weight:500;color:var(--primary-deep);text-decoration:none;
+  border:1px solid var(--border-strong);border-radius:999px;padding:9px 18px;
+  transition:border-color .4s var(--ease),background .4s var(--ease);
+}
+.modal-go:hover{border-color:var(--primary-deep);background:rgba(255,255,255,.05);}
+.modal-go svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.2;
+  stroke-linecap:round;stroke-linejoin:round;transition:transform .4s var(--ease);}
+.modal-go:hover svg{transform:translateX(3px);}
+
+/* arte dos guias */
+.guia-art{margin:36px 0 0;border-radius:18px;overflow:hidden;border:1px solid var(--border);}
+.guia-art svg{display:block;width:100%;height:auto;}
+.gc-art{margin:-28px -30px 22px;border-bottom:1px solid var(--border);overflow:hidden;}
+.gc-art svg{display:block;width:100%;height:auto;}
+.guia-card{overflow:hidden;}
+@media (max-width:600px){ .gc-art{margin:-28px -20px 20px;} }
+</style>
 <div class="nav">
   <nav class="nav-inner">
-    <a class="logo" href="#topo" aria-label="DocLytics — início">
-      <svg viewBox="130 425 850 275" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="DocLytics">
+    <a class="logo" href="/" aria-label="Doclytics — início">
+      <svg viewBox="130 425 850 275" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Doclytics">
         <g transform="translate(3421.2 0)" fill="currentColor">
           <path d="M-3145.3,542.5v123.4c0,3-1.5,5.9-3.6,7.8s-.4.3-.6.5l-4,2.5c-2.9,1.8-6.2,2.4-9.6,1.3s-.2,0-.4-.1l-46.1-20.5-54.8-23.7c-.2,0-.3-.1-.5-.2-5-3-8.6-8.3-8.6-14.2v-145c0-.1,0-.3,0-.4.4-4,2.8-6.7,6.2-8.4,2.8-1.5,6.1-2.9,9.4-1.5l58.7,25.3,21.9,9.4c.6.3.9.7.9,1.3v11.6c.2,8.9,6.7,19.8,15.2,23.4l14.5,6.1c.6.2,1.3.5,1.3,1.5ZM-3210.3,628.5v-6.2c0-.5.5-.7.9-.7,8.2.8,15-2.3,17.6-10.3,2.1-6.3,1.2-13.1-2-19s-4.5-6.3-7.6-8.8-.2-.1-.3-.2l-6.3-4.3c0,0-.1,0-.2-.1l-8.1-4.9c-5.1-3.1-9.2-8.3-7.7-14.4.7-2.8,2.9-4.9,5.9-4.9,7.6,0,14.2,5.4,15.9,12.8.2,1,1.2,1.4,2,1.4l6.3-.2c.9,0,1.8-.8,1.6-1.8-1.3-9-7.8-16.1-15.8-20.3s-2.1-2-2.1-3.4v-5c0-.7-.5-1.7-1.2-1.9l-5.3-1.9c-.9-.3-1.8.4-1.8,1.3v3.9c0,2.1-1.7,3.8-3.8,3.8h0c-.1,0-.2,0-.3,0-7.4.8-11.7,6.6-12.4,13.8s1.9,15.2,7.2,20.8c2.5,2.7,5.4,4.8,8.6,6.7l7.2,4.2c5.6,3.3,11,8,10.3,14.8s-2.4,5.8-5.6,6.3c-2.5.5-5,0-7.4-.8-6.7-2.1-11.5-7.4-13-14.3-.2-1.1-1.1-1.7-2.2-1.7h-6.1c-2.7,0-1.4,4-.3,7.1,2.7,7.8,8.2,14.1,15.5,17.9,1.3.7,2.1,2,2.1,3.4v5c0,1,1,1.6,1.9,1.9l4.4,1.5c1,.3,1.9-.5,1.9-1.6Z"/>
           <path d="M-3136.6,658.8v-121.1c0-1.8-1.4-2.6-2.7-3.2l-15.5-6.3c-7.7-3.2-12.9-10.8-13.2-19.1v-13.4c0-1.1-.5-2.5-1.6-2.9l-25.4-11.2-46.8-20.5c-1.4-.6-2.3-2-2.3-3.6v-1.8c0-3.7,2.6-6,5.7-7.5s6-2.8,9.3-1.4l59.6,25.6,46.6,20.1c5.8,2.5,8.7,9,8.7,14.9v4.4s0,134,0,134c0,3.7-2.2,7.2-5.3,8.9l-10.4,6c-2.4,1.4-6.6.5-6.6-1.8Z"/>
@@ -498,18 +693,125 @@ footer{border-top:1px solid var(--border);padding:48px 0;font-size:.86rem;color:
       </svg>
     </a>
     <ul class="nav-links">
-      <li><a href="#recursos">Recursos</a></li>
-      <li><a href="#como">Como funciona</a></li>
-      <li><a href="#planos">Planos</a></li>
-      <li><a href="#duvidas">Dúvidas</a></li>
+      <li><a href="/#recursos">Recursos</a></li>
+      <li><a href="/#como">Como funciona</a></li>
+      <li><a href="/guias">Guias</a></li>
+      <li><a href="/#planos">Planos</a></li>
+      <li><a href="/#duvidas">Dúvidas</a></li>
     </ul>
-    <a class="btn btn-primary" href="#planos">
+    <a class="btn btn-primary" href="/#planos">
       Testar 3 dias grátis
       <span class="cap" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
     </a>
   </nav>
 </div>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="gFundo" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eff5f5"/><stop offset="1" stop-color="#f6f8f8"/>
+    </linearGradient>
+    <linearGradient id="gVerde" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3d7474"/><stop offset="1" stop-color="#336666"/>
+    </linearGradient>
+    <linearGradient id="gArea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#336666" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#336666" stop-opacity=".02"/>
+    </linearGradient>
+
+    <!-- CAC: muitas mensagens afunilando em poucos fechamentos -->
+    <symbol id="art-cac" viewBox="0 0 800 240">
+      <rect width="800" height="240" fill="url(#gFundo)"/>
+      <g fill="#336666" opacity=".22">
+        <!-- 60 pontos = volume de mensagens -->
+        <g id="pontos">
+          <circle cx="70" cy="46" r="5"/><circle cx="96" cy="46" r="5"/><circle cx="122" cy="46" r="5"/><circle cx="148" cy="46" r="5"/><circle cx="174" cy="46" r="5"/><circle cx="200" cy="46" r="5"/>
+          <circle cx="70" cy="72" r="5"/><circle cx="96" cy="72" r="5"/><circle cx="122" cy="72" r="5"/><circle cx="148" cy="72" r="5"/><circle cx="174" cy="72" r="5"/><circle cx="200" cy="72" r="5"/>
+          <circle cx="70" cy="98" r="5"/><circle cx="96" cy="98" r="5"/><circle cx="122" cy="98" r="5"/><circle cx="148" cy="98" r="5"/><circle cx="174" cy="98" r="5"/><circle cx="200" cy="98" r="5"/>
+          <circle cx="70" cy="124" r="5"/><circle cx="96" cy="124" r="5"/><circle cx="122" cy="124" r="5"/><circle cx="148" cy="124" r="5"/><circle cx="174" cy="124" r="5"/><circle cx="200" cy="124" r="5"/>
+          <circle cx="70" cy="150" r="5"/><circle cx="96" cy="150" r="5"/><circle cx="122" cy="150" r="5"/><circle cx="148" cy="150" r="5"/><circle cx="174" cy="150" r="5"/><circle cx="200" cy="150" r="5"/>
+          <circle cx="70" cy="176" r="5"/><circle cx="96" cy="176" r="5"/><circle cx="122" cy="176" r="5"/><circle cx="148" cy="176" r="5"/><circle cx="174" cy="176" r="5"/><circle cx="200" cy="176" r="5"/>
+          <circle cx="70" cy="202" r="5"/><circle cx="96" cy="202" r="5"/><circle cx="122" cy="202" r="5"/><circle cx="148" cy="202" r="5"/><circle cx="174" cy="202" r="5"/><circle cx="200" cy="202" r="5"/>
+        </g>
+      </g>
+      <!-- funil -->
+      <path d="M250 34 L520 96 L520 144 L250 206 Z" fill="#336666" opacity=".1"/>
+      <path d="M250 34 L520 96" stroke="#336666" stroke-width="2" fill="none" opacity=".45"/>
+      <path d="M250 206 L520 144" stroke="#336666" stroke-width="2" fill="none" opacity=".45"/>
+      <!-- fechamentos -->
+      <g fill="url(#gVerde)">
+        <rect x="566" y="86" width="22" height="22" rx="5"/><rect x="596" y="86" width="22" height="22" rx="5"/>
+        <rect x="626" y="86" width="22" height="22" rx="5"/><rect x="656" y="86" width="22" height="22" rx="5"/>
+        <rect x="566" y="116" width="22" height="22" rx="5"/><rect x="596" y="116" width="22" height="22" rx="5"/>
+        <rect x="626" y="116" width="22" height="22" rx="5"/><rect x="656" y="116" width="22" height="22" rx="5"/>
+        <rect x="566" y="146" width="22" height="22" rx="5"/><rect x="596" y="146" width="22" height="22" rx="5"/>
+        <rect x="626" y="146" width="22" height="22" rx="5"/><rect x="656" y="146" width="22" height="22" rx="5"/>
+        <rect x="566" y="56" width="22" height="22" rx="5"/><rect x="596" y="56" width="22" height="22" rx="5"/>
+      </g>
+      <!-- marcador do custo -->
+      <rect x="700" y="98" width="58" height="44" rx="10" fill="#1f4f4f"/>
+      <path d="M729 92 l0 -18" stroke="#b98a4b" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="729" cy="68" r="6" fill="#b98a4b"/>
+      <text x="729" y="126" text-anchor="middle" font-family="Inter Tight,Inter,sans-serif"
+            font-size="19" font-weight="600" fill="#ffffff">CAC</text>
+    </symbol>
+
+    <!-- ROAS: um real investido devolvendo um bloco maior -->
+    <symbol id="art-roas" viewBox="0 0 800 240">
+      <rect width="800" height="240" fill="url(#gFundo)"/>
+      <!-- investimento: um bloco -->
+      <rect x="86" y="96" width="48" height="48" rx="11" fill="url(#gVerde)"/>
+      <text x="110" y="176" text-anchor="middle" font-family="Inter,sans-serif"
+            font-size="15" fill="#5c6664">investido</text>
+      <!-- seta -->
+      <path d="M168 120 h72" stroke="#336666" stroke-width="2.5" stroke-linecap="round" opacity=".5"/>
+      <path d="M232 111 l10 9 -10 9" stroke="#336666" stroke-width="2.5" fill="none"
+            stroke-linecap="round" stroke-linejoin="round" opacity=".5"/>
+      <!-- retorno: nove blocos e uma fração -->
+      <g fill="#336666">
+        <g opacity=".9">
+          <rect x="290" y="60" width="40" height="40" rx="9"/><rect x="340" y="60" width="40" height="40" rx="9"/>
+          <rect x="390" y="60" width="40" height="40" rx="9"/><rect x="440" y="60" width="40" height="40" rx="9"/>
+          <rect x="290" y="110" width="40" height="40" rx="9"/><rect x="340" y="110" width="40" height="40" rx="9"/>
+          <rect x="390" y="110" width="40" height="40" rx="9"/><rect x="440" y="110" width="40" height="40" rx="9"/>
+          <rect x="290" y="160" width="40" height="40" rx="9"/>
+        </g>
+        <rect x="340" y="160" width="16" height="40" rx="7" opacity=".45"/>
+      </g>
+      <text x="290" y="42" font-family="Inter,sans-serif" font-size="15" fill="#5c6664">retornou</text>
+      <!-- multiplicador -->
+      <rect x="560" y="88" width="150" height="64" rx="16" fill="#1f4f4f"/>
+      <text x="635" y="131" text-anchor="middle" font-family="Inter Tight,Inter,sans-serif"
+            font-size="30" font-weight="600" fill="#ffffff">9,4x</text>
+      <circle cx="710" cy="88" r="7" fill="#b98a4b"/>
+    </symbol>
+
+    <!-- ROI: a área acima da linha de investimento -->
+    <symbol id="art-roi" viewBox="0 0 800 240">
+      <rect width="800" height="240" fill="url(#gFundo)"/>
+      <!-- grade -->
+      <g stroke="#336666" stroke-width="1" opacity=".08">
+        <path d="M70 60 H720"/><path d="M70 110 H720"/><path d="M70 160 H720"/>
+      </g>
+      <!-- area de receita -->
+      <path d="M70 196 C170 190 240 168 320 140 C410 108 500 74 600 52 L700 40 L700 196 Z" fill="url(#gArea)"/>
+      <path d="M70 196 C170 190 240 168 320 140 C410 108 500 74 600 52 L700 40"
+            stroke="#336666" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <!-- linha do investimento -->
+      <path d="M70 168 H700" stroke="#b98a4b" stroke-width="2" stroke-dasharray="7 6" opacity=".85"/>
+      <text x="70" y="158" font-family="Inter,sans-serif" font-size="14" fill="#8a6a37">investimento</text>
+      <!-- ponto final -->
+      <circle cx="700" cy="40" r="8" fill="#336666"/>
+      <circle cx="700" cy="40" r="14" fill="#336666" opacity=".18"/>
+      <!-- rotulo -->
+      <rect x="590" y="82" width="130" height="52" rx="14" fill="#1f4f4f"/>
+      <text x="655" y="117" text-anchor="middle" font-family="Inter Tight,Inter,sans-serif"
+            font-size="26" font-weight="600" fill="#ffffff">840%</text>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="view" data-view="home">
 <!-- ===================== HERO ===================== -->
 <header class="hero" id="topo">
   <div class="wrap">
@@ -517,7 +819,7 @@ footer{border-top:1px solid var(--border);padding:48px 0;font-size:.86rem;color:
     <h1 class="rv in">Descubra quanto <em>cada origem</em><br>devolveu em receita</h1>
     <p class="sub rv in">Registre os fechamentos da clínica em um minuto e veja, por origem, o retorno real do que você investe. CAC, ROAS e ROI calculados sozinhos, todo mês.</p>
     <div class="cta-row rv in">
-      <a class="btn btn-lg btn-primary" href="#planos">
+      <a class="btn btn-lg btn-primary" href="/#planos">
         Testar 3 dias grátis
         <span class="cap" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
@@ -714,6 +1016,7 @@ footer{border-top:1px solid var(--border);padding:48px 0;font-size:.86rem;color:
         <div class="name">Custo de aquisição</div>
         <div class="calc">R$ 4.200 investidos ÷ 14 fechamentos</div>
         <p>Quanto custou, em anúncios, cada paciente que fechou por um canal pago.</p>
+        <button class="more-btn" type="button" data-modal="m-cac" aria-haspopup="dialog">Saiba mais <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
       </div>
       <div class="def rv">
         <div class="lbl">ROAS</div>
@@ -721,6 +1024,7 @@ footer{border-top:1px solid var(--border);padding:48px 0;font-size:.86rem;color:
         <div class="name">Retorno sobre o anúncio</div>
         <div class="calc">R$ 39.480 de receita ÷ R$ 4.200 investidos</div>
         <p>Quantas vezes o valor investido voltou em receita.</p>
+        <button class="more-btn" type="button" data-modal="m-roas" aria-haspopup="dialog">Saiba mais <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
       </div>
       <div class="def rv">
         <div class="lbl">ROI</div>
@@ -728,8 +1032,70 @@ footer{border-top:1px solid var(--border);padding:48px 0;font-size:.86rem;color:
         <div class="name">Retorno sobre investimento</div>
         <div class="calc">(R$ 39.480 − R$ 4.200) ÷ R$ 4.200</div>
         <p>O retorno já descontado o que foi gasto. Diz se valeu a pena.</p>
+        <button class="more-btn" type="button" data-modal="m-roi" aria-haspopup="dialog">Saiba mais <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
       </div>
     </div>
+      <dialog class="modal" id="m-cac" aria-labelledby="m-cac-t">
+        <div class="modal-top">
+          <div>
+            <div class="lbl">CAC</div>
+            <h3 id="m-cac-t">Custo de aquisição</h3>
+            <div class="num">R$ 4.200 ÷ 14 fechamentos = R$ 300</div>
+          </div>
+          <button class="modal-x" type="button" aria-label="Fechar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+        </div>
+        <div class="modal-body">
+<h4>Como interpretar</h4>
+            <p>Compare sempre o CAC com o seu ticket médio, nunca isolado. Um CAC de R$ 300 é excelente para um procedimento de R$ 2.800 e ruinoso para uma consulta de R$ 350. O número só significa alguma coisa ao lado do que aquele paciente deixa no caixa.</p>
+            <h4>O erro mais comum</h4>
+            <p>Dividir o investimento pelo número de <strong>mensagens ou leads</strong> em vez de fechamentos. Isso produz um CAC artificialmente baixo, porque a maioria das mensagens nunca vira paciente. O Doclytics usa fechamentos justamente para evitar essa ilusão.</p>
+            <h4>O que fazer com ele</h4>
+            <p>Acompanhe a tendência, não o valor de um mês. CAC subindo com o mesmo investimento costuma indicar público saturado ou anúncio desgastado. CAC caindo é sinal de que dá para aumentar a verba.</p>
+        
+          <a class="modal-go" href="/guias/cac">Ler o guia completo <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </dialog>
+      <dialog class="modal" id="m-roas" aria-labelledby="m-roas-t">
+        <div class="modal-top">
+          <div>
+            <div class="lbl">ROAS</div>
+            <h3 id="m-roas-t">Retorno sobre o anúncio</h3>
+            <div class="num">R$ 39.480 ÷ R$ 4.200 = 9,4x</div>
+          </div>
+          <button class="modal-x" type="button" aria-label="Fechar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+        </div>
+        <div class="modal-body">
+<h4>ROAS não é lucro</h4>
+            <p>Esta é a confusão mais cara do marketing de clínica. O ROAS mede <strong>receita bruta</strong> sobre investimento em mídia. Ele não desconta o custo do material, a comissão da equipe, o aluguel nem os impostos. Um ROAS de 9,4x não significa que sobraram nove reais no bolso.</p>
+            <h4>Qual é o mínimo aceitável</h4>
+            <p>Depende da sua margem, não de uma regra geral. Se um procedimento tem 30% de margem, o ponto de equilíbrio fica em torno de 3,3x — abaixo disso o anúncio consome o lucro. Com margem de 60%, 1,7x já se paga. Calcule o seu antes de julgar o número.</p>
+            <h4>Cuidado ao comparar</h4>
+            <p>ROAS de clínicas diferentes não se compara, porque tickets e margens são diferentes. Compare o seu ROAS com o seu próprio histórico, e entre as origens da sua própria clínica.</p>
+        
+          <a class="modal-go" href="/guias/roas">Ler o guia completo <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </dialog>
+      <dialog class="modal" id="m-roi" aria-labelledby="m-roi-t">
+        <div class="modal-top">
+          <div>
+            <div class="lbl">ROI</div>
+            <h3 id="m-roi-t">Retorno sobre investimento</h3>
+            <div class="num">(R$ 39.480 − R$ 4.200) ÷ R$ 4.200 = 840%</div>
+          </div>
+          <button class="modal-x" type="button" aria-label="Fechar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+        </div>
+        <div class="modal-body">
+<h4>Como ler o percentual</h4>
+            <p>840% quer dizer que cada R$ 1 investido devolveu R$ 8,40 <strong>além</strong> do que foi gasto. É a diferença para o ROAS: o ROAS conta o dinheiro que voltou, o ROI conta o que voltou a mais.</p>
+            <h4>É ROI de mídia, não do negócio</h4>
+            <p>Aqui entram apenas a receita atribuída e o investimento em anúncios. Custos operacionais da clínica ficam de fora. Para o ROI do negócio, seu contador precisa partir desse número e descontar o resto.</p>
+            <h4>O sinal que ele dá</h4>
+            <p>ROI positivo e estável enquanto você aumenta a verba é o melhor cenário: significa que ainda há público para alcançar. Quando a verba sobe e o ROI cai, o público está saturando — hora de mudar a oferta ou o criativo, não de gastar mais.</p>
+        
+          <a class="modal-go" href="/guias/roi">Ler o guia completo <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </dialog>
+
     <div class="rule-note rv">
       <span class="eyebrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg> A regra</span>
       <h3>Receita orgânica nunca entra no cálculo da mídia paga</h3>
@@ -778,7 +1144,7 @@ footer{border-top:1px solid var(--border);padding:48px 0;font-size:.86rem;color:
           Testar 3 dias grátis
           <span class="cap" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         </a>
-        <p class="pay-note">Sem cartão de crédito. Prefere ativar agora? <a id="p-wa" href="https://wa.me/558398788088" target="_blank" rel="noopener">Fale no WhatsApp</a>.</p>
+        <p class="pay-note">Sem cartão de crédito. Você escolhe o plano depois do teste.</p>
       </div>
     </div>
     <p class="plans-foot rv">A cobrança é única pelo período contratado, e não há fidelidade.</p>
@@ -794,8 +1160,8 @@ footer{border-top:1px solid var(--border);padding:48px 0;font-size:.86rem;color:
     </div>
     <div class="faq rv">
       <details open>
-        <summary>O DocLytics substitui meu sistema de gestão?</summary>
-        <div class="a">Não. Ele não tem agenda, prontuário nem estoque. O DocLytics responde o que esses sistemas costumam deixar de fora: de qual origem veio cada paciente que fechou e qual o retorno do que você investe em anúncios. A maioria das clínicas usa os dois em paralelo.</div>
+        <summary>O Doclytics substitui meu sistema de gestão?</summary>
+        <div class="a">Não. Ele não tem agenda, prontuário nem estoque. O Doclytics responde o que esses sistemas costumam deixar de fora: de qual origem veio cada paciente que fechou e qual o retorno do que você investe em anúncios. A maioria das clínicas usa os dois em paralelo.</div>
       </details>
       <details>
         <summary>Quanto tempo leva para lançar um fechamento?</summary>
@@ -819,7 +1185,7 @@ footer{border-top:1px solid var(--border);padding:48px 0;font-size:.86rem;color:
       </details>
       <details>
         <summary>Meus dados ficam seguros?</summary>
-        <div class="a">O isolamento entre clínicas é aplicado no próprio banco de dados a cada consulta, não apenas na tela. As ações administrativas ficam registradas em auditoria, e o tratamento dos dados segue a LGPD.</div>
+        <div class="a">O isolamento entre clínicas é aplicado no próprio banco de dados a cada consulta, não apenas na tela. As ações administrativas ficam registradas em auditoria, e o tratamento dos dados segue a LGPD. Detalhamos tudo — quais dados guardamos, onde ficam armazenados e quais são os seus direitos — na <a href="/privacidade">Política de Privacidade</a>.</div>
       </details>
     </div>
   </div>
@@ -832,27 +1198,697 @@ footer{border-top:1px solid var(--border);padding:48px 0;font-size:.86rem;color:
     <h2>No fim do mês, você vai saber.</h2>
     <p>Cadastre a clínica, lance os fechamentos da semana e veja o primeiro relatório com dados reais — os seus.</p>
     <div class="cta-row">
-      <a class="btn btn-lg btn-primary" href="https://wa.me/558398788088?text=Ol%C3%A1!%20Quero%20testar%20o%20DocLytics%20na%20minha%20cl%C3%ADnica." target="_blank" rel="noopener">
+      <a class="btn btn-lg btn-primary" href="/cadastro">
         Testar 3 dias grátis
         <span class="cap" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
-      <a class="btn btn-lg btn-ghost" href="#planos">Ver planos</a>
+      <a class="btn btn-lg btn-ghost" href="/#planos">Ver planos</a>
     </div>
   </div>
 </section>
+</div>
+
+<div class="view legal" data-view="termos" hidden>
+<div class="wrap">
+  <header class="top">
+    <div class="doc">
+      <span class="eyebrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M9 15h6M9 11h4"/></svg> Documento legal</span>
+      <h1>Termos de Uso</h1>
+      <p class="meta">Última atualização: 31 de agosto de 2026</p>
+    </div>
+  </header>
+
+  <div class="doc">
+    <div class="toc">
+      <h2>Índice</h2>
+      <ol>
+        <li><a href="#t1">Quem somos</a></li>
+        <li><a href="#t2">O que a plataforma faz</a></li>
+        <li><a href="#t3">Cadastro e conta</a></li>
+        <li><a href="#t4">Usuários e permissões</a></li>
+        <li><a href="#t5">Período de teste</a></li>
+        <li><a href="#t6">Planos e pagamento</a></li>
+        <li><a href="#t7">Arrependimento e cancelamento</a></li>
+        <li><a href="#t8">Obrigações do cliente</a></li>
+        <li><a href="#t9">Usos proibidos</a></li>
+        <li><a href="#t10">Disponibilidade e suporte</a></li>
+        <li><a href="#t11">Propriedade intelectual</a></li>
+        <li><a href="#t12">Limitação de responsabilidade</a></li>
+        <li><a href="#t13">Encerramento e dados</a></li>
+        <li><a href="#t14">Alterações destes termos</a></li>
+        <li><a href="#t15">Lei aplicável e foro</a></li>
+      </ol>
+    </div>
+
+    <article>
+      <h2 id="t1"><span class="n">1.</span> Quem somos</h2>
+      <p>O Doclytics é uma plataforma de software operada por <strong>Showa Marketing LTDA</strong>, inscrita no CNPJ sob o nº 47.707.966/0001-27, com sede na Avenida Rio Grande do Sul, 1345, Salas 210 e 211, Caixa Postal 260, Bairro dos Estados, João Pessoa/PB, CEP 58030-020, doravante denominada simplesmente "Doclytics".</p>
+      <p>Estes Termos regem o uso da plataforma por clínicas, consultórios e profissionais de saúde, doravante "Cliente". Ao criar uma conta, o Cliente declara ter lido, compreendido e aceitado integralmente este documento e a <a href="/privacidade">Política de Privacidade</a>.</p>
+      <div class="defbox">
+        <dl>
+          <dt>Plataforma</dt><dd>O sistema Doclytics, acessível pela internet.</dd>
+          <dt>Organização</dt><dd>A clínica ou consultório cadastrado, com seus dados e equipe.</dd>
+          <dt>Usuário</dt><dd>Pessoa física com acesso ao ambiente de uma Organização.</dd>
+          <dt>Fechamento</dt><dd>Registro de um atendimento concluído e do valor correspondente.</dd>
+        </dl>
+      </div>
+
+      <h2 id="t2"><span class="n">2.</span> O que a plataforma faz — e o que não faz</h2>
+      <p>O Doclytics registra fechamentos de atendimento e calcula indicadores financeiros e de marketing: faturamento, ticket médio, custo de aquisição (CAC), retorno sobre anúncio (ROAS) e retorno sobre investimento (ROI), segmentados por origem do paciente.</p>
+      <p>Para evitar dúvida, o Doclytics <strong>não é</strong>:</p>
+      <ul>
+        <li>prontuário eletrônico ou sistema de registro clínico;</li>
+        <li>dispositivo médico ou software de apoio a decisão clínica;</li>
+        <li>sistema de emissão fiscal, contábil ou substituto da escrituração contábil;</li>
+        <li>agenda de pacientes ou sistema de marcação de consultas.</li>
+      </ul>
+      <p>Os indicadores apresentados têm finalidade gerencial e dependem integralmente da qualidade dos dados inseridos pelo Cliente. Decisões de negócio tomadas com base neles são de responsabilidade exclusiva do Cliente.</p>
+
+      <h2 id="t3"><span class="n">3.</span> Cadastro e conta</h2>
+      <p>Ao cadastrar uma Organização, a pessoa declara possuir poderes para representá-la e assumir obrigações em seu nome.</p>
+      <p>O Cliente é responsável pela veracidade dos dados informados, pela guarda das credenciais de acesso e por toda atividade realizada em sua conta. Suspeita de acesso indevido deve ser comunicada imediatamente pelos canais de suporte.</p>
+      <p>O cadastro exige que o titular seja maior de 18 anos e esteja regular perante seu conselho profissional, quando aplicável.</p>
+
+      <h2 id="t4"><span class="n">4.</span> Usuários e permissões</h2>
+      <p>A plataforma opera com três papéis: <strong>proprietário</strong>, <strong>administrador</strong> e <strong>usuário</strong>. Proprietário e administrador podem gerir catálogos, investimentos e ajustes manuais de valor; o usuário registra fechamentos e consulta indicadores.</p>
+      <p>O acesso de novos usuários é concedido por convite nominal, com link válido por 7 dias. Cabe ao Cliente conceder, revisar e revogar acessos, e responder pelos atos praticados por sua equipe dentro da plataforma.</p>
+
+      <h2 id="t5"><span class="n">5.</span> Período de teste</h2>
+      <p>A primeira Organização criada por um titular recebe <strong>3 (três) dias</strong> de acesso completo, sem necessidade de cartão de crédito. Organizações adicionais do mesmo titular não têm direito a novo período de teste.</p>
+      <p>Encerrado o período sem contratação de plano, o acesso de escrita é bloqueado e os dados permanecem armazenados, nos termos da cláusula 13.</p>
+
+      <h2 id="t6"><span class="n">6.</span> Planos e pagamento</h2>
+      <p>Os planos vigentes, seus prazos e valores estão descritos na <a href="/#planos">página de planos</a>. A cobrança é <strong>única, referente a todo o período contratado</strong>, e não há renovação automática enquanto o Cliente não contratar novo período.</p>
+      <p>Atualmente o pagamento é feito por <strong>Pix</strong>, combinado diretamente com o suporte, e a ativação do plano é manual. Não coletamos nem armazenamos dados de cartão de crédito. Caso venhamos a adotar processador de pagamento automatizado, este documento será atualizado antes da mudança.</p>
+      <p>Valores poderão ser reajustados para novas contratações mediante aviso prévio na página de planos. Contratações vigentes não são afetadas durante o período já pago.</p>
+
+      <h2 id="t7"><span class="n">7.</span> Arrependimento e cancelamento</h2>
+      <p>Nos termos do artigo 49 do Código de Defesa do Consumidor, o Cliente pode desistir da contratação em até <strong>7 (sete) dias corridos</strong> contados do pagamento, com devolução integral do valor pago. O pedido deve ser feito pelos canais de suporte.</p>
+      <p>Após esse prazo, o Cliente pode encerrar o uso a qualquer momento, sem multa ou fidelidade. Como a cobrança é única e antecipada, não há reembolso proporcional do período já pago, salvo disposição legal em contrário.</p>
+
+      <h2 id="t8"><span class="n">8.</span> Obrigações do cliente quanto a dados de pacientes</h2>
+      <p>Esta é a cláusula mais importante deste documento. O Cliente insere na plataforma dados de pessoas que não são parte desta relação — seus pacientes.</p>
+      <p>Para os fins da Lei nº 13.709/2018 (LGPD), o <strong>Cliente é o Controlador</strong> desses dados e o <strong>Doclytics é o Operador</strong>, tratando-os exclusivamente conforme as instruções do Cliente. Compete ao Cliente:</p>
+      <ul>
+        <li>possuir base legal adequada para o tratamento, observando que o vínculo entre nome do paciente e procedimento realizado configura <strong>dado pessoal sensível</strong> (art. 5º, II, da LGPD);</li>
+        <li>informar seus pacientes sobre o tratamento realizado, na forma do art. 9º da LGPD, inclusive quanto ao armazenamento no exterior descrito na Política de Privacidade;</li>
+        <li>atender às solicitações de titulares, que devem ser dirigidas ao Cliente e não ao Doclytics;</li>
+        <li>observar o sigilo profissional e as normas do respectivo conselho de classe;</li>
+        <li>inserir apenas os dados necessários à finalidade, abstendo-se de registrar informações clínicas detalhadas, que não são objeto desta plataforma.</li>
+      </ul>
+
+      <h2 id="t9"><span class="n">9.</span> Usos proibidos</h2>
+      <p>É vedado ao Cliente e a seus usuários:</p>
+      <ul>
+        <li>tentar acessar dados de outra Organização, por qualquer meio;</li>
+        <li>realizar engenharia reversa, cópia ou redistribuição da plataforma;</li>
+        <li>automatizar acessos de forma a comprometer a estabilidade do serviço;</li>
+        <li>utilizar a plataforma para finalidade ilícita ou que viole direitos de terceiros;</li>
+        <li>compartilhar credenciais entre pessoas, contornando o sistema de convites.</li>
+      </ul>
+      <p>A violação pode acarretar suspensão imediata do acesso, sem prejuízo das medidas cabíveis.</p>
+
+      <h2 id="t10"><span class="n">10.</span> Disponibilidade e suporte</h2>
+      <p>O Doclytics empreende esforços para manter a plataforma disponível de forma contínua, mas não garante operação ininterrupta ou livre de falhas. Poderão ocorrer interrupções para manutenção, atualização ou por fatores alheios ao seu controle, incluindo indisponibilidade de fornecedores de infraestrutura.</p>
+      <p>O suporte é prestado por <strong>WhatsApp, em horário comercial</strong>, nos dias úteis.</p>
+
+      <h2 id="t11"><span class="n">11.</span> Propriedade intelectual</h2>
+      <p>A plataforma, seu código, marca, identidade visual e documentação pertencem à Showa Marketing LTDA. O contrato concede ao Cliente uma licença de uso não exclusiva, intransferível e limitada ao período contratado.</p>
+      <p>Os <strong>dados inseridos pelo Cliente permanecem de sua titularidade</strong>. O Doclytics não os utiliza para finalidade diversa da prestação do serviço, ressalvado o uso de dados agregados e anonimizados para melhoria da plataforma.</p>
+
+      <h2 id="t12"><span class="n">12.</span> Limitação de responsabilidade</h2>
+      <p>Na máxima extensão permitida pela legislação, o Doclytics não responde por lucros cessantes, perda de oportunidade ou decisões comerciais tomadas com base nos indicadores da plataforma.</p>
+      <p>A responsabilidade total do Doclytics, por qualquer causa, fica limitada ao valor efetivamente pago pelo Cliente nos 12 (doze) meses anteriores ao evento. Esta limitação não se aplica a hipóteses de dolo ou às situações em que a lei vedar a limitação.</p>
+
+      <h2 id="t13"><span class="n">13.</span> Encerramento e destino dos dados</h2>
+      <p><strong>Fim do período contratado sem renovação.</strong> Os dados da Organização não são apagados. O que ocorre é o bloqueio de novos registros: a equipe deixa de poder lançar fechamentos ou alterar catálogos, mas continua podendo <strong>consultar o histórico já existente</strong>. O acesso pleno é restabelecido assim que um novo plano for contratado, com todo o histórico preservado.</p>
+      <p><strong>Exclusão a pedido.</strong> O Cliente pode solicitar ao suporte a exclusão da Organização e de todos os seus dados a qualquer momento. O pedido é atendido de forma imediata e a exclusão é definitiva, não sendo possível recuperar as informações depois.</p>
+      <p>Antes de solicitar a exclusão, o Cliente pode pedir ao suporte a exportação de seus dados em formato legível.</p>
+      <p>Permanecem conservados, mesmo após a exclusão, apenas os registros que a legislação obrigue a manter — como documentos fiscais relativos aos pagamentos, pelo prazo previsto na legislação tributária, e os registros de acesso à aplicação exigidos pelo Marco Civil da Internet.</p>
+
+      <h2 id="t14"><span class="n">14.</span> Alterações destes termos</h2>
+      <p>Estes Termos podem ser alterados a qualquer tempo. Alterações relevantes serão comunicadas aos responsáveis pelas Organizações com antecedência mínima de <strong>30 (trinta) dias</strong>, por e-mail ou aviso na plataforma. O uso continuado após a vigência implica concordância.</p>
+
+      <h2 id="t15"><span class="n">15.</span> Lei aplicável e foro</h2>
+      <p>Estes Termos são regidos pelas leis brasileiras. Fica eleito o foro da comarca de <strong>João Pessoa/PB</strong> para dirimir controvérsias, ressalvado o direito do consumidor de acionar o foro de seu domicílio.</p>
+    </article>
+
+    <div class="pair">
+      <a href="/privacidade">Ler a Política de Privacidade →</a>
+      <a href="/">Voltar para o site</a>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="view legal" data-view="privacidade" hidden>
+<div class="wrap">
+  <header class="top">
+    <div class="doc">
+      <span class="eyebrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg> Documento legal</span>
+      <h1>Política de Privacidade</h1>
+      <p class="meta">Última atualização: 31 de agosto de 2026</p>
+    </div>
+  </header>
+
+  <div class="doc">
+    <div class="toc">
+      <h2>Índice</h2>
+      <ol>
+        <li><a href="#p1">Controlador e operador</a></li>
+        <li><a href="#p2">Dados que tratamos</a></li>
+        <li><a href="#p3">Dados sensíveis de saúde</a></li>
+        <li><a href="#p4">Finalidades e bases legais</a></li>
+        <li><a href="#p5">Com quem compartilhamos</a></li>
+        <li><a href="#p6">Transferência internacional</a></li>
+        <li><a href="#p7">Segurança da informação</a></li>
+        <li><a href="#p8">Prazo de retenção</a></li>
+        <li><a href="#p9">Direitos dos titulares</a></li>
+        <li><a href="#p10">Se você é paciente</a></li>
+        <li><a href="#p11">Cookies</a></li>
+        <li><a href="#p12">Incidentes de segurança</a></li>
+        <li><a href="#p13">Encarregado (DPO)</a></li>
+        <li><a href="#p14">Alterações desta política</a></li>
+      </ol>
+    </div>
+
+    <article>
+      <h2 id="p1"><span class="n">1.</span> Nosso papel: quando somos controlador e quando somos operador</h2>
+      <p>Esta distinção define quem responde por cada dado e é a base de todo o restante deste documento.</p>
+      <div class="defbox">
+        <dl>
+          <dt>Controlador</dt><dd>Quem decide por que e como os dados são tratados.</dd>
+          <dt>Operador</dt><dd>Quem trata os dados seguindo as instruções do controlador.</dd>
+        </dl>
+      </div>
+      <p>Somos <strong>controladores</strong> dos dados de nossos próprios clientes: o cadastro da clínica, o nome e o e-mail dos usuários, os dados de cobrança e os registros de uso da plataforma.</p>
+      <p>Somos <strong>operadores</strong> dos dados de pacientes que a clínica insere. A clínica decide o que registrar e por quê; nós apenas armazenamos e processamos conforme suas instruções, sem uso próprio.</p>
+
+      <h2 id="p2"><span class="n">2.</span> Dados que tratamos</h2>
+      <p><strong>Da clínica e de seus usuários:</strong> razão social ou nome, CNPJ ou CPF, endereço, estado e cidade, nome e e-mail de cada usuário, papel na organização e histórico de acessos administrativos.</p>
+      <p><strong>Dos pacientes, inseridos pela clínica:</strong> nome, telefone, data do atendimento, tipo de atendimento e serviços realizados, forma de pagamento, valor e observações internas.</p>
+      <p><strong>De uso e técnicos:</strong> endereço IP, data e hora de acesso, tipo de navegador e registros de erro, necessários à segurança e ao funcionamento.</p>
+      <p><strong>Financeiros:</strong> plano contratado, período de vigência e situação da assinatura. Como o pagamento é feito por Pix diretamente com o suporte, <strong>não coletamos nem armazenamos dados de cartão de crédito</strong> em momento algum.</p>
+
+      <h2 id="p3"><span class="n">3.</span> Dados sensíveis de saúde</h2>
+      <p>Quando a clínica registra o nome de um paciente vinculado a um tipo de atendimento ou procedimento, esse conjunto constitui <strong>dado pessoal sensível</strong>, na definição do art. 5º, II, da LGPD, por revelar informação referente à saúde de pessoa identificada.</p>
+      <p>Tratamos esses dados exclusivamente como operadores, sob as instruções da clínica controladora, com as medidas técnicas descritas na seção 7. Não os utilizamos para publicidade, perfilamento, venda ou qualquer finalidade própria.</p>
+      <p>Orientamos as clínicas a registrar apenas o necessário à gestão financeira, evitando descrições clínicas, diagnósticos ou qualquer informação que exceda essa finalidade.</p>
+
+      <h2 id="p4"><span class="n">4.</span> Finalidades e bases legais</h2>
+      <ul>
+        <li><strong>Prestar o serviço contratado</strong> — execução de contrato (art. 7º, V).</li>
+        <li><strong>Cobrança e faturamento</strong> — execução de contrato e cumprimento de obrigação legal (art. 7º, V e II).</li>
+        <li><strong>Segurança, prevenção a fraude e registros de acesso</strong> — legítimo interesse e obrigação legal (art. 7º, IX e II).</li>
+        <li><strong>Suporte ao cliente</strong> — execução de contrato (art. 7º, V).</li>
+        <li><strong>Dados de pacientes</strong> — tratados como operador; a base legal é definida pela clínica controladora.</li>
+        <li><strong>Comunicações sobre o produto</strong> — legítimo interesse, com possibilidade de descadastro a qualquer momento.</li>
+      </ul>
+
+      <h2 id="p5"><span class="n">5.</span> Com quem compartilhamos</h2>
+      <p><strong>Não vendemos dados pessoais.</strong> O compartilhamento se limita a fornecedores necessários à operação, que atuam como suboperadores e estão obrigados contratualmente a proteger as informações:</p>
+      <ul>
+        <li><strong>Lovable</strong> e <strong>Supabase</strong> — hospedagem da aplicação, banco de dados e envio de e-mails de convite e recuperação de senha;</li>
+        <li><strong>instituição financeira do Cliente</strong> — o pagamento é feito por Pix diretamente à Showa Marketing, sem intermediário que receba dados pessoais dos pacientes;</li>
+        <li>autoridades públicas, quando houver determinação legal ou judicial.</li>
+      </ul>
+
+      <h2 id="p6"><span class="n">6.</span> Transferência internacional de dados</h2>
+      <div class="alert">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></svg>
+        <p><strong>Seus dados são armazenados fora do Brasil.</strong> O banco de dados que guarda as informações da clínica e de seus pacientes é operado por Lovable e Supabase sobre infraestrutura da Amazon Web Services localizada nos <strong>Estados Unidos</strong> (região us-west-2, Oregon).</p>
+      </div>
+      <p>A aplicação em si é entregue por uma rede de distribuição global, com pontos de presença em diversos países, inclusive no Brasil. Essa camada apenas <strong>entrega a interface e processa a requisição</strong>; ela não armazena os dados da clínica nem de seus pacientes, que permanecem em repouso exclusivamente no banco de dados descrito acima.</p>
+      <p>Essa transferência internacional observa o art. 33 da LGPD, amparada nas cláusulas contratuais firmadas com os fornecedores de infraestrutura, que asseguram grau de proteção de dados pessoais compatível com o previsto na legislação brasileira. Ao utilizar a plataforma, o Cliente está ciente dessa condição, que deve ser considerada na avaliação de risco da própria clínica enquanto controladora.</p>
+
+      <h2 id="p7"><span class="n">7.</span> Segurança da informação</h2>
+      <p>Adotamos medidas técnicas e administrativas compatíveis com a natureza dos dados tratados:</p>
+      <ul>
+        <li>isolamento entre organizações aplicado no próprio banco de dados, verificado a cada consulta, e não apenas na interface;</li>
+        <li>controle de acesso por papéis, com funções administrativas restritas;</li>
+        <li>convites de acesso nominais, com link de uso único e validade de 7 dias;</li>
+        <li>registro de auditoria das ações administrativas;</li>
+        <li>criptografia em trânsito e senhas armazenadas sob algoritmo de derivação;</li>
+        <li>rotinas de backup da base de dados.</li>
+      </ul>
+      <p>Nenhum sistema é integralmente imune a incidentes. Comprometemo-nos a agir com diligência e a comunicar eventos relevantes conforme a seção 12.</p>
+
+      <h2 id="p8"><span class="n">8.</span> Prazo de retenção</h2>
+      <p><strong>Não eliminamos dados automaticamente pelo fim da assinatura.</strong> Encerrado o período contratado sem renovação, os registros da clínica permanecem armazenados por tempo indeterminado, com o acesso limitado à consulta: a equipe deixa de poder inserir novos registros, mas continua podendo visualizar o histórico. A finalidade é permitir a retomada do serviço sem perda de informação.</p>
+      <p>A eliminação ocorre <strong>a pedido</strong>. O responsável pela clínica pode solicitá-la ao suporte a qualquer momento, e ela é executada de forma imediata e definitiva.</p>
+      <p>Independentemente disso, conservamos pelos prazos legais: documentos fiscais relativos aos pagamentos, conforme a legislação tributária, e registros de acesso à aplicação por 6 (seis) meses, conforme o art. 15 do Marco Civil da Internet.</p>
+      <p>Se você é paciente e deseja a eliminação dos seus dados, o pedido deve ser dirigido à clínica que os registrou, conforme a seção 10.</p>
+
+      <h2 id="p9"><span class="n">9.</span> Direitos dos titulares</h2>
+      <p>Nos termos do art. 18 da LGPD, você pode solicitar confirmação da existência de tratamento, acesso aos dados, correção, anonimização, portabilidade, eliminação, informação sobre compartilhamentos e revogação de consentimento.</p>
+      <p>Solicitações devem ser feitas para <a href="mailto:app.doclytics@gmail.com">app.doclytics@gmail.com</a> e serão respondidas nos prazos legais. Podemos solicitar informações adicionais para confirmar sua identidade, medida de segurança em seu próprio benefício.</p>
+
+      <h2 id="p10"><span class="n">10.</span> Se você é paciente de uma clínica usuária</h2>
+      <p>Se seus dados foram inseridos por uma clínica que usa o Doclytics, <strong>a clínica é a controladora</strong> e é a ela que seus pedidos devem ser dirigidos — é ela quem decide quais dados registrar e por quanto tempo mantê-los.</p>
+      <p>Se você nos procurar diretamente, encaminharemos sua solicitação à clínica responsável e a apoiaremos no atendimento, mas não podemos alterar ou excluir dados por conta própria sem instrução dela.</p>
+
+      <h2 id="p11"><span class="n">11.</span> Cookies</h2>
+      <p>Utilizamos apenas cookies e armazenamento local <strong>necessários ao funcionamento</strong>: manutenção da sessão autenticada, preferências de interface e segurança. Por serem estritamente necessários à prestação do serviço, não dependem de consentimento prévio e não exibimos banner de cookies.</p>
+      <p>Não utilizamos cookies de publicidade, de rastreamento entre sites ou de perfilamento de visitantes. Caso venhamos a adotar ferramentas de medição de audiência ou de anúncios, esta Política será atualizada e passaremos a solicitar consentimento antes da ativação.</p>
+
+      <h2 id="p12"><span class="n">12.</span> Incidentes de segurança</h2>
+      <p>Havendo incidente que possa acarretar risco ou dano relevante aos titulares, comunicaremos a Autoridade Nacional de Proteção de Dados (ANPD) e os controladores afetados em prazo razoável, informando a natureza do ocorrido, os dados envolvidos e as medidas adotadas, conforme o art. 48 da LGPD.</p>
+
+      <h2 id="p13"><span class="n">13.</span> Encarregado pelo tratamento de dados</h2>
+      <p>Nosso encarregado pelo tratamento de dados pessoais (DPO) é <strong>Victor Lucas de Andrade</strong>, que pode ser contatado em <a href="mailto:app.doclytics@gmail.com">app.doclytics@gmail.com</a>.</p>
+
+      <h2 id="p14"><span class="n">14.</span> Alterações desta política</h2>
+      <p>Esta Política pode ser atualizada. A data no topo indica a última revisão, e alterações relevantes serão comunicadas aos clientes por e-mail ou aviso na plataforma.</p>
+    </article>
+
+    <div class="pair">
+      <a href="/termos">Ler os Termos de Uso →</a>
+      <a href="/">Voltar para o site</a>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="view legal guide" data-view="guias" hidden>
+<div class="wrap">
+  <header class="top">
+    <div class="doc">
+      <span class="eyebrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg> Guias</span>
+      <h1>As três métricas que decidem o orçamento da clínica</h1>
+      <p class="lead">CAC, ROAS e ROI explicados com números de clínica, não com teoria de marketing. O que cada um mede, qual o valor aceitável para o seu ticket e os erros de cálculo que fazem uma campanha ruim parecer boa.</p>
+    </div>
+  </header>
+
+  <div class="doc">
+    <div class="guia-list">
+      <a class="guia-card" href="/guias/cac">
+        <div class="gc-art"><svg viewBox="0 0 800 240" aria-hidden="true"><use href="#art-cac"/></svg></div>
+        <div class="gc-top"><span class="lbl">CAC</span><span class="gc-time">7 min de leitura</span></div>
+        <h2>Custo de aquisição de paciente</h2>
+        <p>Quanto custa, em anúncios, cada paciente que fecha. Por que dividir por mensagens em vez de fechamentos infla o número, e qual CAC faz sentido para cada faixa de ticket.</p>
+        <span class="gc-go">Ler o guia <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="guia-card" href="/guias/roas">
+        <div class="gc-art"><svg viewBox="0 0 800 240" aria-hidden="true"><use href="#art-roas"/></svg></div>
+        <div class="gc-top"><span class="lbl">ROAS</span><span class="gc-time">8 min de leitura</span></div>
+        <h2>Retorno sobre o anúncio</h2>
+        <p>A confusão mais cara do marketing de clínica: ROAS não é lucro. Como calcular o seu ponto de equilíbrio a partir da margem do procedimento.</p>
+        <span class="gc-go">Ler o guia <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="guia-card" href="/guias/roi">
+        <div class="gc-art"><svg viewBox="0 0 800 240" aria-hidden="true"><use href="#art-roi"/></svg></div>
+        <div class="gc-top"><span class="lbl">ROI</span><span class="gc-time">7 min de leitura</span></div>
+        <h2>Retorno sobre investimento</h2>
+        <p>O que sobra depois de descontar o que foi gasto, a diferença exata para o ROAS e o sinal que indica quando parar de aumentar a verba.</p>
+        <span class="gc-go">Ler o guia <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </div>
+
+    <div class="guia-cta">
+      <h3>Esses números saem sozinhos no Doclytics</h3>
+      <p>Você lança os fechamentos e informa o investimento do mês. O sistema calcula CAC, ROAS e ROI por origem, com a receita orgânica fora da conta.</p>
+      <a class="btn btn-lg btn-primary" href="/#planos">Conhecer o Doclytics<span class="cap" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="view legal guide" data-view="guias/cac" hidden>
+<div class="wrap">
+  <header class="top">
+    <div class="doc">
+      <a class="crumb" href="/guias">← Guias</a>
+      <h1>CAC: como calcular o custo de aquisição de paciente na clínica</h1>
+      <p class="lead">O CAC responde quanto custou, em anúncios, cada paciente que efetivamente fechou. É o número que diz se vale a pena continuar investindo — desde que você o calcule do jeito certo.</p>
+    </div>
+  </header>
+  <div class="wrap"><div class="doc">
+    <div class="guia-art"><svg viewBox="0 0 800 240" role="img" aria-label="Ilustração do guia de CAC"><use href="#art-cac"/></svg></div>
+  </div></div>
+
+  <div class="doc">
+    <div class="toc">
+      <h2>Neste guia</h2>
+      <ol>
+        <li><a href="#c1">O que o CAC mede</a></li>
+        <li><a href="#c2">A fórmula e o denominador certo</a></li>
+        <li><a href="#c3">Exemplo com números de clínica</a></li>
+        <li><a href="#c4">Qual CAC é aceitável para o seu ticket</a></li>
+        <li><a href="#c5">Por que origem orgânica fica de fora</a></li>
+        <li><a href="#c6">CAC e o valor do paciente ao longo do tempo</a></li>
+        <li><a href="#c7">Quatro erros que distorcem o número</a></li>
+        <li><a href="#c8">Perguntas frequentes</a></li>
+      </ol>
+    </div>
+
+    <article>
+      <h2 id="c1"><span class="n">1.</span> O que o CAC mede</h2>
+      <p>CAC é a sigla de Custo de Aquisição de Cliente — no caso de uma clínica, custo de aquisição de paciente. Ele responde a uma pergunta simples: <strong>de todo o dinheiro que entrou em anúncios neste mês, quanto foi gasto para conseguir cada paciente que realmente fechou um atendimento?</strong></p>
+      <p>A importância dele vem de uma comparação. Sozinho, um CAC de R$ 300 não é bom nem ruim. Ao lado de um ticket médio de R$ 2.800, é excelente. Ao lado de um ticket de R$ 350, significa que a clínica está trabalhando praticamente de graça para pagar a mídia.</p>
+      <div class="key">
+        <p><strong>Em uma frase:</strong> o CAC só tem significado quando comparado ao que o paciente deixa no caixa. Nunca avalie o número isolado.</p>
+      </div>
+
+      <h2 id="c2"><span class="n">2.</span> A fórmula e o denominador certo</h2>
+      <p>A fórmula é direta:</p>
+      <div class="formula">CAC = investimento em anúncios ÷ pacientes que fecharam por canal pago</div>
+      <p>A parte que quase todo mundo erra não é o numerador — é o <strong>denominador</strong>. Existe uma tentação enorme de dividir o investimento pelo número de mensagens recebidas, de leads, de contatos no WhatsApp. Esse cálculo produz um número muito mais bonito e completamente inútil.</p>
+      <p>Suponha R$ 4.200 investidos em Instagram Ads, que geraram 180 mensagens e 14 fechamentos:</p>
+      <div class="tabela">
+        <table>
+          <thead><tr><th>Denominador usado</th><th>Resultado</th><th>Serve para</th></tr></thead>
+          <tbody>
+            <tr><td>180 mensagens</td><td>R$ 23,33</td><td>Avaliar o anúncio, não o negócio</td></tr>
+            <tr><td>14 fechamentos</td><td><strong>R$ 300,00</strong></td><td>Decidir orçamento</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Os dois números são verdadeiros e medem coisas diferentes. O custo por mensagem diz se o anúncio está atraindo atenção barata. O CAC diz se essa atenção vira dinheiro. Uma campanha pode ter custo por mensagem ótimo e CAC péssimo — é exatamente o caso quando o anúncio atrai muita gente curiosa e pouca gente disposta a pagar.</p>
+
+      <h2 id="c3"><span class="n">3.</span> Exemplo com números de clínica</h2>
+      <p>Uma clínica de estética investiu, em agosto:</p>
+      <ul>
+        <li>R$ 4.200 em Instagram Ads → 180 mensagens → 14 fechamentos → R$ 39.480 de receita</li>
+        <li>R$ 2.800 em Google Ads → 96 mensagens → 8 fechamentos → R$ 20.400 de receita</li>
+        <li>R$ 0 em indicação → 11 fechamentos → R$ 27.500 de receita</li>
+      </ul>
+      <p>Calculando por origem paga:</p>
+      <div class="tabela">
+        <table>
+          <thead><tr><th>Origem</th><th>Investimento</th><th>Fechamentos</th><th>CAC</th><th>Ticket médio</th></tr></thead>
+          <tbody>
+            <tr><td>Instagram Ads</td><td>R$ 4.200</td><td>14</td><td>R$ 300</td><td>R$ 2.820</td></tr>
+            <tr><td>Google Ads</td><td>R$ 2.800</td><td>8</td><td>R$ 350</td><td>R$ 2.550</td></tr>
+            <tr><td>Indicação</td><td>—</td><td>11</td><td>não se aplica</td><td>R$ 2.500</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>A leitura prática: o Instagram traz paciente mais barato <em>e</em> com ticket maior. Se houvesse verba adicional para deslocar, o Instagram seria o primeiro candidato — mas só depois de verificar se o público ainda comporta mais investimento, o que o ROI mostra melhor.</p>
+
+      <h2 id="c4"><span class="n">4.</span> Qual CAC é aceitável para o seu ticket</h2>
+      <p>Não existe CAC bom em termos absolutos. O que existe é uma relação saudável entre CAC e ticket médio. Uma referência prática, considerando margens típicas de serviços de saúde:</p>
+      <div class="tabela">
+        <table>
+          <thead><tr><th>Ticket médio</th><th>CAC confortável</th><th>CAC de atenção</th><th>CAC insustentável</th></tr></thead>
+          <tbody>
+            <tr><td>R$ 300</td><td>até R$ 45</td><td>R$ 45 a R$ 90</td><td>acima de R$ 90</td></tr>
+            <tr><td>R$ 800</td><td>até R$ 120</td><td>R$ 120 a R$ 240</td><td>acima de R$ 240</td></tr>
+            <tr><td>R$ 2.500</td><td>até R$ 375</td><td>R$ 375 a R$ 750</td><td>acima de R$ 750</td></tr>
+            <tr><td>R$ 6.000</td><td>até R$ 900</td><td>R$ 900 a R$ 1.800</td><td>acima de R$ 1.800</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>A régua usada aqui é conservadora: CAC até 15% do ticket como confortável e até 30% como limite de atenção. Ela não substitui o cálculo com a sua margem real — se o seu procedimento tem custo de material alto, a faixa confortável encolhe.</p>
+
+      <h2 id="c5"><span class="n">5.</span> Por que origem orgânica fica de fora</h2>
+      <p>Esta é a regra que mais muda o resultado, e a que mais gente ignora. Pacientes que chegaram por indicação, por passar em frente à clínica ou por busca espontânea <strong>não podem entrar no denominador do CAC</strong>.</p>
+      <p>O motivo é aritmético. No exemplo acima, se somássemos os 11 fechamentos de indicação aos 22 pagos, o CAC cairia de R$ 318 para R$ 212 — uma queda de 33% sem que nenhum anúncio tenha melhorado. O anúncio estaria levando crédito por pacientes que teriam vindo de qualquer forma.</p>
+      <p>A consequência é pior do que um número errado: você decidiria aumentar a verba com base numa eficiência que não existe, e o CAC real subiria quando os pacientes orgânicos daquele mês não se repetissem.</p>
+      <div class="key">
+        <p><strong>Regra:</strong> receita e fechamentos orgânicos contam no faturamento total e no relatório por origem, mas nunca no CAC, no ROAS ou no ROI da mídia paga.</p>
+      </div>
+
+      <h2 id="c6"><span class="n">6.</span> CAC e o valor do paciente ao longo do tempo</h2>
+      <p>O CAC compara o custo com <em>um</em> atendimento. Mas muitos pacientes voltam — para manutenção, para um segundo procedimento, para acompanhamento. Quando isso acontece, um CAC que parece alto no primeiro mês pode ser excelente no horizonte de um ano.</p>
+      <p>Se o paciente médio da sua clínica realiza 2,5 atendimentos ao longo de dois anos, um ticket de R$ 2.500 vira R$ 6.250 de receita acumulada. Um CAC de R$ 700, que pareceria alto contra o ticket único, passa a representar 11% do valor total do paciente.</p>
+      <p>Isso não é licença para aceitar CAC alto: significa que a decisão precisa considerar a taxa de retorno dos seus pacientes. Clínicas com procedimentos de dose única e sem recorrência devem ser bem mais rigorosas do que clínicas com protocolos de manutenção.</p>
+
+      <h2 id="c7"><span class="n">7.</span> Quatro erros que distorcem o número</h2>
+      <p><strong>Contar leads em vez de fechamentos.</strong> Já tratado acima, e é de longe o mais comum. Produz um CAC de dez a vinte vezes menor que o real.</p>
+      <p><strong>Misturar todas as origens numa conta só.</strong> Um CAC agregado esconde o canal que está drenando o orçamento. Calcule sempre por origem.</p>
+      <p><strong>Esquecer o custo da agência ou do gestor de tráfego.</strong> Se você paga R$ 1.500 de honorário além dos R$ 4.200 de mídia, o investimento real é R$ 5.700 e o CAC vai de R$ 300 para R$ 407. Ambos os números são legítimos, desde que você saiba qual está olhando.</p>
+      <p><strong>Comparar meses com sazonalidade diferente.</strong> Dezembro e janeiro se comportam de forma distinta em quase toda especialidade. Compare com o mesmo mês do ano anterior sempre que tiver histórico.</p>
+
+      <h2 id="c8"><span class="n">8.</span> Perguntas frequentes</h2>
+      <h3>Qual a diferença entre CAC e custo por lead?</h3>
+      <p>O custo por lead divide o investimento pelo número de contatos gerados; o CAC divide pelo número de pacientes que fecharam. O primeiro mede a eficiência do anúncio em chamar atenção, o segundo mede a eficiência do investimento em gerar receita.</p>
+      <h3>Devo incluir o salário da recepção no CAC?</h3>
+      <p>Na definição estrita de CAC de marketing, não — ele mede o custo de mídia. Custos operacionais entram no cálculo de lucro, não no CAC. O importante é manter o mesmo critério todos os meses para que a comparação faça sentido.</p>
+      <h3>Meu CAC subiu, o que fazer primeiro?</h3>
+      <p>Antes de mudar a verba, verifique se o número de fechamentos caiu ou se o investimento subiu — são causas diferentes. Se os fechamentos caíram com o mesmo investimento, o problema costuma estar no anúncio ou no atendimento que recebe as mensagens, não no orçamento.</p>
+      <h3>Com que frequência devo calcular?</h3>
+      <p>Mensalmente é o intervalo que equilibra volume de dados e capacidade de reação. Semanal costuma ter poucos fechamentos e oscilar demais; trimestral demora a revelar problema.</p>
+    </article>
+
+    <div class="guia-cta">
+      <h3>O Doclytics calcula esse número sozinho</h3>
+      <p>Registre os fechamentos com a origem e informe o investimento do mês. O CAC aparece pronto no painel e no relatório, sempre com a receita orgânica fora da conta.</p>
+      <a class="btn btn-lg btn-primary" href="/#planos">Ver planos<span class="cap" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+    </div>
+    <div class="pair">
+      <a href="/guias/roas">Próximo: ROAS →</a>
+      <a href="/guias">Todos os guias</a>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="view legal guide" data-view="guias/roas" hidden>
+<div class="wrap">
+  <header class="top">
+    <div class="doc">
+      <a class="crumb" href="/guias">← Guias</a>
+      <h1>ROAS: por que ele não é lucro, e como achar o seu mínimo</h1>
+      <p class="lead">O ROAS mede quantas vezes o investimento voltou em receita bruta. Confundi-lo com lucro é o erro mais caro do marketing de clínica — e um ROAS de 4x pode estar dando prejuízo.</p>
+    </div>
+  </header>
+  <div class="wrap"><div class="doc">
+    <div class="guia-art"><svg viewBox="0 0 800 240" role="img" aria-label="Ilustração do guia de ROAS"><use href="#art-roas"/></svg></div>
+  </div></div>
+
+  <div class="doc">
+    <div class="toc">
+      <h2>Neste guia</h2>
+      <ol>
+        <li><a href="#s1">O que o ROAS mede</a></li>
+        <li><a href="#s2">Por que ROAS não é lucro</a></li>
+        <li><a href="#s3">Como calcular o seu ROAS mínimo</a></li>
+        <li><a href="#s4">Tabela de equilíbrio por margem</a></li>
+        <li><a href="#s5">ROAS por origem, nunca agregado</a></li>
+        <li><a href="#s6">Por que não se compara ROAS entre clínicas</a></li>
+        <li><a href="#s7">Erros comuns</a></li>
+        <li><a href="#s8">Perguntas frequentes</a></li>
+      </ol>
+    </div>
+
+    <article>
+      <h2 id="s1"><span class="n">1.</span> O que o ROAS mede</h2>
+      <p>ROAS vem de <em>return on ad spend</em>, retorno sobre o investimento em anúncio. Ele responde: para cada real colocado em mídia, quantos reais de receita voltaram?</p>
+      <div class="formula">ROAS = receita atribuída ÷ investimento em anúncios</div>
+      <p>O resultado é lido em múltiplos. R$ 39.480 de receita sobre R$ 4.200 investidos dá 9,4x — cada real investido trouxe R$ 9,40 de receita. Alguns painéis mostram o mesmo número como percentual, 940%; é a mesma informação.</p>
+
+      <h2 id="s2"><span class="n">2.</span> Por que ROAS não é lucro</h2>
+      <p>Esta seção é a razão de existir deste guia. O ROAS usa <strong>receita bruta</strong> no numerador. Ele não desconta:</p>
+      <ul>
+        <li>o custo do material e dos insumos do procedimento;</li>
+        <li>a comissão do profissional que executou;</li>
+        <li>aluguel, energia, equipe administrativa;</li>
+        <li>impostos sobre o faturamento;</li>
+        <li>o honorário da agência ou do gestor de tráfego, se não estiver no investimento.</li>
+      </ul>
+      <p>Um ROAS de 9,4x parece espetacular. Mas se aquele procedimento tem 25% de margem, os R$ 39.480 de receita viram R$ 9.870 de contribuição. Descontando os R$ 4.200 de mídia, sobram R$ 5.670. Ainda é lucro — mas é menos da metade do que "9,4x" sugere para quem lê rápido.</p>
+      <div class="key">
+        <p><strong>A pergunta certa não é "meu ROAS é alto?", e sim "meu ROAS é maior que o mínimo que a minha margem exige?".</strong></p>
+      </div>
+
+      <h2 id="s3"><span class="n">3.</span> Como calcular o seu ROAS mínimo</h2>
+      <p>O ponto de equilíbrio — o ROAS em que a mídia se paga e nada mais — sai de uma conta simples:</p>
+      <div class="formula">ROAS de equilíbrio = 1 ÷ margem de contribuição</div>
+      <p>Se o procedimento tem 30% de margem, o equilíbrio é 1 ÷ 0,30 = 3,33x. Abaixo disso, cada venda gerada por anúncio consome mais do que produz. Acima, começa a sobrar.</p>
+      <p>Para saber a sua margem de contribuição, pegue o preço do procedimento e subtraia apenas os custos que existem <em>por atendimento realizado</em>: material, comissão, insumos descartáveis. Não inclua aluguel nem salário fixo, que existiriam de qualquer forma.</p>
+
+      <h2 id="s4"><span class="n">4.</span> Tabela de equilíbrio por margem</h2>
+      <div class="tabela">
+        <table>
+          <thead><tr><th>Margem de contribuição</th><th>ROAS de equilíbrio</th><th>ROAS saudável (2× o equilíbrio)</th></tr></thead>
+          <tbody>
+            <tr><td>20%</td><td>5,0x</td><td>10,0x</td></tr>
+            <tr><td>30%</td><td>3,3x</td><td>6,6x</td></tr>
+            <tr><td>40%</td><td>2,5x</td><td>5,0x</td></tr>
+            <tr><td>50%</td><td>2,0x</td><td>4,0x</td></tr>
+            <tr><td>60%</td><td>1,7x</td><td>3,4x</td></tr>
+            <tr><td>70%</td><td>1,4x</td><td>2,8x</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>A coluna do meio é sobrevivência; a da direita é o patamar em que a mídia paga a si mesma e ainda contribui de forma relevante para as despesas fixas. Note como a exigência muda: uma clínica com 20% de margem precisa de ROAS 5x só para empatar, enquanto uma com 60% já lucra a partir de 1,7x. É por isso que comparar ROAS entre negócios diferentes não faz sentido.</p>
+
+      <h2 id="s5"><span class="n">5.</span> ROAS por origem, nunca agregado</h2>
+      <p>Um ROAS geral esconde o canal que está queimando dinheiro. Veja o mesmo mês de duas formas:</p>
+      <div class="tabela">
+        <table>
+          <thead><tr><th>Leitura</th><th>Investimento</th><th>Receita atribuída</th><th>ROAS</th></tr></thead>
+          <tbody>
+            <tr><td>Agregado</td><td>R$ 7.000</td><td>R$ 59.880</td><td>8,6x</td></tr>
+            <tr><td>Instagram Ads</td><td>R$ 4.200</td><td>R$ 39.480</td><td>9,4x</td></tr>
+            <tr><td>Google Ads</td><td>R$ 2.800</td><td>R$ 20.400</td><td>7,3x</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Aqui os dois canais são saudáveis e a diferença é modesta. Mas se o Google estivesse em 2,1x, o número agregado de 8,6x continuaria confortável e você não veria o problema. A média sempre protege o pior desempenho.</p>
+
+      <h2 id="s6"><span class="n">6.</span> Por que não se compara ROAS entre clínicas</h2>
+      <p>É comum ouvir em grupo de médicos que "o ROAS bom é 5x". Esse tipo de referência causa mais dano do que ajuda, por três motivos.</p>
+      <p>Primeiro, a margem muda tudo, como a tabela acima mostra. Segundo, o ticket muda o comportamento: procedimentos caros têm ciclo de decisão longo, e a receita costuma aparecer em um mês posterior ao do investimento, deprimindo o ROAS do mês corrente. Terceiro, e mais importante, nem todo mundo calcula igual — quem inclui receita orgânica no numerador infla o próprio número e contamina a referência do grupo inteiro.</p>
+      <p>A única comparação confiável é com o seu próprio histórico, e entre as origens da sua própria clínica.</p>
+
+      <h2 id="s7"><span class="n">7.</span> Erros comuns</h2>
+      <p><strong>Incluir receita orgânica.</strong> Some os fechamentos por indicação ao numerador e o ROAS sobe sem que o anúncio tenha feito nada. É o erro que mais infla resultado.</p>
+      <p><strong>Ignorar o intervalo entre clique e fechamento.</strong> Em procedimentos de ticket alto, o paciente que viu o anúncio em agosto pode fechar em setembro. Isso deprime agosto e infla setembro. Olhe a tendência de três meses.</p>
+      <p><strong>Tratar ROAS como meta única.</strong> É possível ter ROAS altíssimo reduzindo a verba a quase nada e atendendo só quem já estava decidido. Cresce o múltiplo, encolhe o faturamento. ROAS precisa ser lido junto com o volume absoluto de receita.</p>
+
+      <h2 id="s8"><span class="n">8.</span> Perguntas frequentes</h2>
+      <h3>ROAS de 4x é bom?</h3>
+      <p>Depende inteiramente da sua margem. Com 60% de margem, 4x é confortável. Com 20%, 4x está abaixo do equilíbrio de 5x e você está perdendo dinheiro a cada venda.</p>
+      <h3>Qual a diferença entre ROAS e ROI?</h3>
+      <p>O ROAS conta todo o dinheiro que voltou; o ROI conta apenas o que voltou <em>a mais</em> que o investido. ROAS de 9,4x equivale a ROI de 840%.</p>
+      <h3>Devo incluir o honorário da agência no investimento?</h3>
+      <p>Idealmente sim, porque é custo de aquisição. Se preferir separar, calcule dos dois jeitos e saiba qual está olhando — o importante é não mudar o critério de um mês para o outro.</p>
+      <h3>Meu ROAS caiu depois que aumentei a verba. É normal?</h3>
+      <p>Sim, e é o comportamento esperado. Os primeiros reais alcançam o público mais propenso; conforme a verba cresce, o anúncio passa a atingir gente menos interessada. A queda indica onde está o limite saudável do canal.</p>
+    </article>
+
+    <div class="guia-cta">
+      <h3>ROAS por origem, calculado todo mês</h3>
+      <p>O Doclytics separa receita paga de orgânica automaticamente, então o seu ROAS nunca vem inflado por paciente de indicação.</p>
+      <a class="btn btn-lg btn-primary" href="/#planos">Ver planos<span class="cap" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+    </div>
+    <div class="pair">
+      <a href="/guias/roi">Próximo: ROI →</a>
+      <a href="/guias">Todos os guias</a>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="view legal guide" data-view="guias/roi" hidden>
+<div class="wrap">
+  <header class="top">
+    <div class="doc">
+      <a class="crumb" href="/guias">← Guias</a>
+      <h1>ROI de anúncio: o que sobra depois de descontar o investimento</h1>
+      <p class="lead">O ROI mostra o retorno já líquido do que foi gasto em mídia. É o número que responde "valeu a pena?" — e o que avisa quando aumentar a verba deixou de compensar.</p>
+    </div>
+  </header>
+  <div class="wrap"><div class="doc">
+    <div class="guia-art"><svg viewBox="0 0 800 240" role="img" aria-label="Ilustração do guia de ROI"><use href="#art-roi"/></svg></div>
+  </div></div>
+
+  <div class="doc">
+    <div class="toc">
+      <h2>Neste guia</h2>
+      <ol>
+        <li><a href="#i1">O que o ROI mede</a></li>
+        <li><a href="#i2">A diferença exata para o ROAS</a></li>
+        <li><a href="#i3">Como ler o percentual</a></li>
+        <li><a href="#i4">ROI de mídia não é ROI do negócio</a></li>
+        <li><a href="#i5">O sinal de saturação</a></li>
+        <li><a href="#i6">Quando o ROI fica negativo</a></li>
+        <li><a href="#i7">Erros comuns</a></li>
+        <li><a href="#i8">Perguntas frequentes</a></li>
+      </ol>
+    </div>
+
+    <article>
+      <h2 id="i1"><span class="n">1.</span> O que o ROI mede</h2>
+      <p>ROI é <em>return on investment</em>, retorno sobre investimento. Diferente do ROAS, ele já desconta o valor investido antes de calcular o retorno:</p>
+      <div class="formula">ROI = (receita atribuída − investimento) ÷ investimento</div>
+      <p>Com R$ 39.480 de receita e R$ 4.200 investidos: (39.480 − 4.200) ÷ 4.200 = 8,4, ou <strong>840%</strong>. Cada real investido devolveu R$ 8,40 <em>acima</em> do que foi gasto.</p>
+
+      <h2 id="i2"><span class="n">2.</span> A diferença exata para o ROAS</h2>
+      <p>As duas métricas usam os mesmos dois números e respondem perguntas diferentes. O ROAS conta o dinheiro que voltou; o ROI conta o que voltou a mais.</p>
+      <div class="tabela">
+        <table>
+          <thead><tr><th>Situação</th><th>ROAS</th><th>ROI</th><th>Significado</th></tr></thead>
+          <tbody>
+            <tr><td>Voltou metade</td><td>0,5x</td><td>−50%</td><td>Prejuízo direto na mídia</td></tr>
+            <tr><td>Voltou o mesmo</td><td>1,0x</td><td>0%</td><td>Empatou</td></tr>
+            <tr><td>Voltou o dobro</td><td>2,0x</td><td>100%</td><td>Dobrou o investido</td></tr>
+            <tr><td>Voltou 9,4 vezes</td><td>9,4x</td><td>840%</td><td>O do exemplo</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>A conversão entre eles é mecânica: <strong>ROI = (ROAS − 1) × 100</strong>. Por isso não faz sentido perseguir os dois como metas separadas — escolha o que a sua equipe entende melhor e use consistentemente.</p>
+
+      <h2 id="i3"><span class="n">3.</span> Como ler o percentual</h2>
+      <p>Percentuais de ROI assustam quem não está acostumado, porque números como 840% parecem irreais. Não são: eles só refletem que o investimento em mídia é pequeno perto da receita que um único procedimento de ticket alto gera.</p>
+      <p>A régua mental: <strong>0% significa empate</strong>, qualquer valor negativo significa que a mídia consumiu mais do que trouxe, e cada 100% equivale a "dobrou o que foi investido". 840% é o mesmo que dizer que o valor voltou 8,4 vezes multiplicado, além do original.</p>
+
+      <h2 id="i4"><span class="n">4.</span> ROI de mídia não é ROI do negócio</h2>
+      <p>O ROI calculado aqui considera apenas receita atribuída e investimento em anúncios. Ele ignora tudo o que custa para <em>entregar</em> o serviço. Continuando o exemplo, com 25% de margem de contribuição:</p>
+      <div class="tabela">
+        <table>
+          <thead><tr><th>Etapa</th><th>Valor</th></tr></thead>
+          <tbody>
+            <tr><td>Receita atribuída</td><td>R$ 39.480</td></tr>
+            <tr><td>Custo de entrega (75%)</td><td>− R$ 29.610</td></tr>
+            <tr><td>Margem de contribuição</td><td>R$ 9.870</td></tr>
+            <tr><td>Investimento em mídia</td><td>− R$ 4.200</td></tr>
+            <tr><td><strong>Sobra real</strong></td><td><strong>R$ 5.670</strong></td></tr>
+            <tr><td>ROI de mídia</td><td>840%</td></tr>
+            <tr><td><strong>ROI considerando a entrega</strong></td><td><strong>135%</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Os dois números são corretos e servem a decisões diferentes. O ROI de mídia responde "devo continuar anunciando neste canal?". O ROI com custo de entrega responde "este procedimento vale a pena vender?". Confundir os dois leva a escalar a venda de um procedimento que dá pouca margem.</p>
+
+      <h2 id="i5"><span class="n">5.</span> O sinal de saturação</h2>
+      <p>O uso mais valioso do ROI não é medir o passado — é decidir o próximo mês. O padrão a observar:</p>
+      <ul>
+        <li><strong>Verba sobe, ROI estável.</strong> Ainda há público não alcançado. É o cenário para continuar aumentando.</li>
+        <li><strong>Verba sobe, ROI cai um pouco.</strong> Começando a saturar. Aumente em passos menores e observe.</li>
+        <li><strong>Verba sobe, ROI cai muito.</strong> O canal atingiu o limite com essa oferta e esse criativo. Aumentar mais queima dinheiro; o caminho é trocar o anúncio ou abrir outro canal.</li>
+        <li><strong>Verba estável, ROI caindo.</strong> Desgaste de criativo ou mudança de concorrência. Renove o anúncio antes de mexer no orçamento.</li>
+      </ul>
+      <p>Nenhum desses diagnósticos é possível com um mês isolado. É preciso série histórica — pelo menos três meses com a origem registrada corretamente.</p>
+
+      <h2 id="i6"><span class="n">6.</span> Quando o ROI fica negativo</h2>
+      <p>ROI negativo significa que a mídia trouxe menos receita do que custou. Antes de cortar a verba, verifique nesta ordem: se os fechamentos foram registrados com a origem certa, se houve fechamento em análise ou pendente de lançamento, e se o ciclo de decisão do procedimento é maior que o mês fechado. Muito ROI "negativo" é, na verdade, receita que ainda não foi lançada ou que foi atribuída à origem errada.</p>
+      <p>Descartadas essas hipóteses, ROI negativo por dois meses seguidos no mesmo canal é motivo suficiente para pausar e reestruturar.</p>
+
+      <h2 id="i7"><span class="n">7.</span> Erros comuns</h2>
+      <p><strong>Comparar ROI de mídia com ROI de investimento financeiro.</strong> São bases completamente diferentes. Um ROI de 840% em mídia não é comparável a rendimento de aplicação, porque a mídia precisa ser gasta de novo todo mês para se repetir.</p>
+      <p><strong>Somar receita orgânica.</strong> Pelo mesmo motivo do CAC e do ROAS: infla o numerador sem que o anúncio tenha participação.</p>
+      <p><strong>Decidir com um mês só.</strong> Sazonalidade e ciclo de decisão produzem variações grandes. Decisão de orçamento pede tendência, não fotografia.</p>
+
+      <h2 id="i8"><span class="n">8.</span> Perguntas frequentes</h2>
+      <h3>ROI e ROAS medem a mesma coisa?</h3>
+      <p>Quase. Usam os mesmos dados, mas o ROI desconta o investimento antes de calcular. A conversão é direta: ROI = (ROAS − 1) × 100.</p>
+      <h3>Qual ROI mínimo devo buscar?</h3>
+      <p>Depende da margem, como no ROAS. Com 30% de margem, o equilíbrio de ROAS é 3,3x, o que corresponde a ROI de 233%. Abaixo disso a mídia não se paga.</p>
+      <h3>Posso calcular ROI de indicação?</h3>
+      <p>Não, porque não há investimento no denominador — a conta seria uma divisão por zero. Indicação entra no faturamento e no relatório por origem, mas não nas métricas de mídia paga.</p>
+      <h3>De quanto em quanto tempo devo revisar?</h3>
+      <p>Mensalmente para acompanhamento e trimestralmente para decisão estrutural de orçamento. Mudanças de verba baseadas em variação semanal tendem a reagir a ruído.</p>
+    </article>
+
+    <div class="guia-cta">
+      <h3>ROI por origem, sem planilha</h3>
+      <p>O Doclytics acompanha a série histórica por canal, que é o que permite enxergar saturação antes de queimar orçamento.</p>
+      <a class="btn btn-lg btn-primary" href="/#planos">Ver planos<span class="cap" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+    </div>
+    <div class="pair">
+      <a href="/guias/cac">Voltar ao início: CAC →</a>
+      <a href="/guias">Todos os guias</a>
+    </div>
+  </div>
+</div>
+</div>
+
 
 <footer>
   <div class="wrap f-in">
-    <span class="logo" style="color:var(--primary);"><svg viewBox="130 425 850 275" style="height:34px;" role="img" aria-label="DocLytics"><g transform="translate(3421.2 0)" fill="currentColor"><path d="M-3145.3,542.5v123.4c0,3-1.5,5.9-3.6,7.8s-.4.3-.6.5l-4,2.5c-2.9,1.8-6.2,2.4-9.6,1.3s-.2,0-.4-.1l-46.1-20.5-54.8-23.7c-.2,0-.3-.1-.5-.2-5-3-8.6-8.3-8.6-14.2v-145c0-.1,0-.3,0-.4.4-4,2.8-6.7,6.2-8.4,2.8-1.5,6.1-2.9,9.4-1.5l58.7,25.3,21.9,9.4c.6.3.9.7.9,1.3v11.6c.2,8.9,6.7,19.8,15.2,23.4l14.5,6.1c.6.2,1.3.5,1.3,1.5ZM-3210.3,628.5v-6.2c0-.5.5-.7.9-.7,8.2.8,15-2.3,17.6-10.3,2.1-6.3,1.2-13.1-2-19s-4.5-6.3-7.6-8.8-.2-.1-.3-.2l-6.3-4.3c0,0-.1,0-.2-.1l-8.1-4.9c-5.1-3.1-9.2-8.3-7.7-14.4.7-2.8,2.9-4.9,5.9-4.9,7.6,0,14.2,5.4,15.9,12.8.2,1,1.2,1.4,2,1.4l6.3-.2c.9,0,1.8-.8,1.6-1.8-1.3-9-7.8-16.1-15.8-20.3s-2.1-2-2.1-3.4v-5c0-.7-.5-1.7-1.2-1.9l-5.3-1.9c-.9-.3-1.8.4-1.8,1.3v3.9c0,2.1-1.7,3.8-3.8,3.8h0c-.1,0-.2,0-.3,0-7.4.8-11.7,6.6-12.4,13.8s1.9,15.2,7.2,20.8c2.5,2.7,5.4,4.8,8.6,6.7l7.2,4.2c5.6,3.3,11,8,10.3,14.8s-2.4,5.8-5.6,6.3c-2.5.5-5,0-7.4-.8-6.7-2.1-11.5-7.4-13-14.3-.2-1.1-1.1-1.7-2.2-1.7h-6.1c-2.7,0-1.4,4-.3,7.1,2.7,7.8,8.2,14.1,15.5,17.9,1.3.7,2.1,2,2.1,3.4v5c0,1,1,1.6,1.9,1.9l4.4,1.5c1,.3,1.9-.5,1.9-1.6Z"/><path d="M-3136.6,658.8v-121.1c0-1.8-1.4-2.6-2.7-3.2l-15.5-6.3c-7.7-3.2-12.9-10.8-13.2-19.1v-13.4c0-1.1-.5-2.5-1.6-2.9l-25.4-11.2-46.8-20.5c-1.4-.6-2.3-2-2.3-3.6v-1.8c0-3.7,2.6-6,5.7-7.5s6-2.8,9.3-1.4l59.6,25.6,46.6,20.1c5.8,2.5,8.7,9,8.7,14.9v4.4s0,134,0,134c0,3.7-2.2,7.2-5.3,8.9l-10.4,6c-2.4,1.4-6.6.5-6.6-1.8Z"/><path d="M-3101.2,642.9c-1.7,1-4.9,1.2-4.9-.7v-139.2c0-6.7-3-12.7-8.9-16s-.2-.1-.4-.2l-37.9-16.3-60.5-25.8c-1.4-.6-2.3-2-2.4-3.5v-.8c0-3.8,2.1-6.3,5.3-7.8s5.3-2.5,8.2-1.3l59.5,25.2,43.7,18.5c6.3,2.7,9.9,8.6,9.9,15.5v139.7c0,3.5-1.8,6.8-4.6,8.5l-6.9,4.1Z"/><path d="M-2965.2,552.8c0,9-1.6,16.8-4.9,23.2-3.3,6.5-7.8,11.5-13.7,14.9-5.9,3.5-12.9,5.2-21,5.2s-15.4-1.7-21.6-5.1c-6.2-3.4-11.1-8.1-14.5-14.1-3.5-6-5.2-12.8-5.2-20.5s1.7-14.5,5.1-20.5c3.4-5.9,8-10.6,13.8-14.1,5.8-3.4,12.3-5.2,19.5-5.2s10.4,1,14.8,3.1c4.4,2.1,7.9,4.9,10.7,8.5v-36.8c0-2.6.8-4.6,2.5-5.9,1.7-1.4,3.9-2,6.6-2s2.9.1,4.4.4c1.5.3,2.7.7,3.6,1.2v67.6ZM-3022,538.5c-4.3,4.5-6.5,10.4-6.5,17.7s2.2,13.2,6.5,17.7c4.4,4.5,9.9,6.8,16.6,6.8s12.4-2.2,16.7-6.8,6.5-10.4,6.5-17.7-2.2-13.2-6.5-17.7-9.9-6.8-16.7-6.8-12.2,2.2-16.6,6.8Z"/><path d="M-2950.7,576.6c-3.7-6-5.5-12.8-5.5-20.2s1.8-14.3,5.5-20.3c3.6-6,8.6-10.7,14.8-14.2,6.2-3.5,13.2-5.2,21-5.2s14.8,1.8,21.1,5.2c6.2,3.5,11.2,8.2,14.8,14.2,3.6,6,5.4,12.8,5.4,20.3s-1.8,14.2-5.4,20.2c-3.6,6-8.5,10.8-14.8,14.2-6.3,3.5-13.3,5.2-21.1,5.2s-14.8-1.8-21-5.2c-6.2-3.5-11.1-8.2-14.8-14.2ZM-2894.5,569.2c2-3.8,3-8,3-12.8s-1-9.1-3-12.8c-2-3.8-4.8-6.7-8.3-8.8-3.6-2.1-7.6-3.1-12.1-3.1s-8.5,1-12.1,3.1c-3.6,2.1-6.3,5-8.3,8.8-2,3.8-3,8-3,12.8s1,9.1,3,12.8c2,3.8,4.8,6.7,8.3,8.8,3.5,2.1,7.6,3.2,12.1,3.2s8.5-1.1,12.1-3.2c3.5-2.1,6.3-5,8.3-8.8Z"/><path d="M-2861,535.8c3.3-6,8.2-10.7,14.5-14.1,6.3-3.4,13.8-5.1,22.5-5.1s9.5.6,13.6,1.7c4,1.2,7.2,2.7,9.4,4.7,2.2,1.9,3.3,4,3.3,6.3s-.5,3.2-1.6,4.9-2.5,3.2-4.3,4.6c-2.5-2.3-5.5-4.1-9.1-5.3-3.6-1.2-7.3-1.9-11.3-1.9-7.3,0-13.2,2.2-17.5,6.5-4.4,4.4-6.6,10.4-6.6,18.1s2.2,13.6,6.7,18.1c4.4,4.5,10.5,6.7,18.1,6.7s13-1.7,18.6-5.1l7.2,12.8c-8.3,5-17.5,7.5-27.8,7.5s-15.2-1.6-21.3-4.9c-6.1-3.2-10.9-7.8-14.2-13.7-3.4-5.9-5.1-12.8-5.1-20.8s1.7-14.9,5-20.9Z"/><path d="M-2781.1,594h-9.9v-105.5c0-3.4,1.8-5.1,5.4-5.1s3.3.4,4.5,1v109.5Z"/><path d="M-2696.5,588.6c0,12.1-3.2,21.3-9.6,27.5-6.4,6.2-15.9,9.4-28.4,9.4s-10-.5-15.3-1.3c-5.3-.9-9.9-2.1-13.8-3.6l2.8-7.8c3.5,1.3,7.7,2.3,12.6,3.2,4.9.8,9.4,1.2,13.5,1.2,9.8,0,17-2.3,21.5-6.8,4.5-4.6,6.8-11.2,6.8-20v-6.9c-1.9,3.9-5.1,7-9.7,9.3-4.6,2.3-10.1,3.5-16.6,3.5-10.1,0-18.3-2.8-24.5-8.4-6.2-5.6-9.3-13.4-9.3-23.4v-39.3c0-3.4,1.8-5.1,5.4-5.1s3.5.4,4.5,1.1v41.2c0,8.3,2.1,14.6,6.2,18.9,4.1,4.3,10.2,6.4,18.1,6.4s14.6-2.3,19-7c4.4-4.7,6.6-11.3,6.6-19.9v-35.7c0-3.4,1.8-5.1,5.4-5.1s3.5.4,4.5,1.1v67.7Z"/><path d="M-2681.7,504.9c0-3.4,1.8-5.1,5.4-5.1s3.3.4,4.5,1.1v19h26.4c3.7,0,5.6,1.6,5.6,5s-.3,2.7-.9,4h-31v43.5c0,4.9,1.3,8.7,3.9,11.3,2.6,2.7,6.3,4,11.2,4s10.5-1.4,15-4.3l4.4,6.4c-2.5,1.9-5.7,3.4-9.5,4.6-3.9,1.1-7.8,1.7-11.8,1.7-7.2,0-12.9-2-17-5.9-4.1-3.9-6.2-9.3-6.2-16.2v-69.1Z"/><path d="M-2631.7,499c-1.4-1.4-2-3.2-2-5.2s.7-3.7,2-5.2c1.3-1.4,3.1-2.2,5.2-2.2s3.8.7,5.2,2.2c1.4,1.5,2,3.2,2,5.2s-.7,3.7-2,5.2c-1.3,1.5-3.1,2.2-5.2,2.2s-3.8-.7-5.2-2.2ZM-2621.5,594h-9.9v-69c0-3.4,1.8-5.1,5.4-5.1s3.3.4,4.5,1.1v73Z"/><path d="M-2604.2,577.5c-3.2-5.9-4.7-12.7-4.7-20.4s1.7-15.1,5-20.9c3.3-5.8,7.9-10.4,13.9-13.6,5.9-3.2,12.9-4.8,20.8-4.8s9.2.5,13.6,1.6c4.4,1,7.4,2.3,9.1,3.7,1.7,1.4,2.5,3,2.5,4.7s-1.1,4-3.3,5.7c-2.5-2.2-5.7-3.9-9.6-5.2-3.9-1.2-8.1-1.9-12.5-1.9-8.9,0-15.9,2.7-21.1,8-5.2,5.4-7.7,12.8-7.7,22.4s2.7,17.2,8.1,22.7c5.4,5.4,12.9,8.1,22.5,8.1s13.4-1.6,19.2-4.9l4,7.3c-3.9,2.2-8,3.8-12.1,4.7-4.2.9-8.5,1.4-12.8,1.4-8.3,0-15.4-1.6-21.3-4.9-5.9-3.2-10.4-7.8-13.6-13.7Z"/><path d="M-2472.6,573.2c0,7-3,12.6-9,16.7s-14,6.2-23.9,6.2-9.5-.5-14.5-1.4c-5-.9-9.4-2-13.3-3.3-4-1.3-6.8-2.6-8.5-3.9l4.2-7.6c3.6,2.2,8.2,4,14,5.5s11.6,2.2,17.8,2.2,13-1.1,17-3.5c3.9-2.3,5.8-5.6,5.8-9.9,0-7.1-5.5-11.3-16.6-12.6l-17.1-2c-8-.9-14.2-3.1-18.4-6.7-4.3-3.5-6.5-8.2-6.5-14s2.8-11.9,8.5-15.7,13.8-5.6,24.3-5.6,10.8.5,15.5,1.4c4.7,1,8.6,2.2,11.5,3.9,2.9,1.6,4.4,3.5,4.4,5.6s-.3,2-.9,3.1c-.6,1-1.5,1.9-2.5,2.5-2.6-2.4-6.7-4.4-12.3-5.9-5.6-1.5-11.4-2.3-17.2-2.3s-12.1,1.1-15.8,3.2c-3.7,2.2-5.6,5.3-5.6,9.4,0,6.8,5.2,10.8,15.8,12l17.1,2c17.5,2,26.2,8.8,26.2,20.5Z"/></g></svg></span>
+    <span class="logo" style="color:var(--primary);"><svg viewBox="130 425 850 275" style="height:34px;" role="img" aria-label="Doclytics"><g transform="translate(3421.2 0)" fill="currentColor"><path d="M-3145.3,542.5v123.4c0,3-1.5,5.9-3.6,7.8s-.4.3-.6.5l-4,2.5c-2.9,1.8-6.2,2.4-9.6,1.3s-.2,0-.4-.1l-46.1-20.5-54.8-23.7c-.2,0-.3-.1-.5-.2-5-3-8.6-8.3-8.6-14.2v-145c0-.1,0-.3,0-.4.4-4,2.8-6.7,6.2-8.4,2.8-1.5,6.1-2.9,9.4-1.5l58.7,25.3,21.9,9.4c.6.3.9.7.9,1.3v11.6c.2,8.9,6.7,19.8,15.2,23.4l14.5,6.1c.6.2,1.3.5,1.3,1.5ZM-3210.3,628.5v-6.2c0-.5.5-.7.9-.7,8.2.8,15-2.3,17.6-10.3,2.1-6.3,1.2-13.1-2-19s-4.5-6.3-7.6-8.8-.2-.1-.3-.2l-6.3-4.3c0,0-.1,0-.2-.1l-8.1-4.9c-5.1-3.1-9.2-8.3-7.7-14.4.7-2.8,2.9-4.9,5.9-4.9,7.6,0,14.2,5.4,15.9,12.8.2,1,1.2,1.4,2,1.4l6.3-.2c.9,0,1.8-.8,1.6-1.8-1.3-9-7.8-16.1-15.8-20.3s-2.1-2-2.1-3.4v-5c0-.7-.5-1.7-1.2-1.9l-5.3-1.9c-.9-.3-1.8.4-1.8,1.3v3.9c0,2.1-1.7,3.8-3.8,3.8h0c-.1,0-.2,0-.3,0-7.4.8-11.7,6.6-12.4,13.8s1.9,15.2,7.2,20.8c2.5,2.7,5.4,4.8,8.6,6.7l7.2,4.2c5.6,3.3,11,8,10.3,14.8s-2.4,5.8-5.6,6.3c-2.5.5-5,0-7.4-.8-6.7-2.1-11.5-7.4-13-14.3-.2-1.1-1.1-1.7-2.2-1.7h-6.1c-2.7,0-1.4,4-.3,7.1,2.7,7.8,8.2,14.1,15.5,17.9,1.3.7,2.1,2,2.1,3.4v5c0,1,1,1.6,1.9,1.9l4.4,1.5c1,.3,1.9-.5,1.9-1.6Z"/><path d="M-3136.6,658.8v-121.1c0-1.8-1.4-2.6-2.7-3.2l-15.5-6.3c-7.7-3.2-12.9-10.8-13.2-19.1v-13.4c0-1.1-.5-2.5-1.6-2.9l-25.4-11.2-46.8-20.5c-1.4-.6-2.3-2-2.3-3.6v-1.8c0-3.7,2.6-6,5.7-7.5s6-2.8,9.3-1.4l59.6,25.6,46.6,20.1c5.8,2.5,8.7,9,8.7,14.9v4.4s0,134,0,134c0,3.7-2.2,7.2-5.3,8.9l-10.4,6c-2.4,1.4-6.6.5-6.6-1.8Z"/><path d="M-3101.2,642.9c-1.7,1-4.9,1.2-4.9-.7v-139.2c0-6.7-3-12.7-8.9-16s-.2-.1-.4-.2l-37.9-16.3-60.5-25.8c-1.4-.6-2.3-2-2.4-3.5v-.8c0-3.8,2.1-6.3,5.3-7.8s5.3-2.5,8.2-1.3l59.5,25.2,43.7,18.5c6.3,2.7,9.9,8.6,9.9,15.5v139.7c0,3.5-1.8,6.8-4.6,8.5l-6.9,4.1Z"/><path d="M-2965.2,552.8c0,9-1.6,16.8-4.9,23.2-3.3,6.5-7.8,11.5-13.7,14.9-5.9,3.5-12.9,5.2-21,5.2s-15.4-1.7-21.6-5.1c-6.2-3.4-11.1-8.1-14.5-14.1-3.5-6-5.2-12.8-5.2-20.5s1.7-14.5,5.1-20.5c3.4-5.9,8-10.6,13.8-14.1,5.8-3.4,12.3-5.2,19.5-5.2s10.4,1,14.8,3.1c4.4,2.1,7.9,4.9,10.7,8.5v-36.8c0-2.6.8-4.6,2.5-5.9,1.7-1.4,3.9-2,6.6-2s2.9.1,4.4.4c1.5.3,2.7.7,3.6,1.2v67.6ZM-3022,538.5c-4.3,4.5-6.5,10.4-6.5,17.7s2.2,13.2,6.5,17.7c4.4,4.5,9.9,6.8,16.6,6.8s12.4-2.2,16.7-6.8,6.5-10.4,6.5-17.7-2.2-13.2-6.5-17.7-9.9-6.8-16.7-6.8-12.2,2.2-16.6,6.8Z"/><path d="M-2950.7,576.6c-3.7-6-5.5-12.8-5.5-20.2s1.8-14.3,5.5-20.3c3.6-6,8.6-10.7,14.8-14.2,6.2-3.5,13.2-5.2,21-5.2s14.8,1.8,21.1,5.2c6.2,3.5,11.2,8.2,14.8,14.2,3.6,6,5.4,12.8,5.4,20.3s-1.8,14.2-5.4,20.2c-3.6,6-8.5,10.8-14.8,14.2-6.3,3.5-13.3,5.2-21.1,5.2s-14.8-1.8-21-5.2c-6.2-3.5-11.1-8.2-14.8-14.2ZM-2894.5,569.2c2-3.8,3-8,3-12.8s-1-9.1-3-12.8c-2-3.8-4.8-6.7-8.3-8.8-3.6-2.1-7.6-3.1-12.1-3.1s-8.5,1-12.1,3.1c-3.6,2.1-6.3,5-8.3,8.8-2,3.8-3,8-3,12.8s1,9.1,3,12.8c2,3.8,4.8,6.7,8.3,8.8,3.5,2.1,7.6,3.2,12.1,3.2s8.5-1.1,12.1-3.2c3.5-2.1,6.3-5,8.3-8.8Z"/><path d="M-2861,535.8c3.3-6,8.2-10.7,14.5-14.1,6.3-3.4,13.8-5.1,22.5-5.1s9.5.6,13.6,1.7c4,1.2,7.2,2.7,9.4,4.7,2.2,1.9,3.3,4,3.3,6.3s-.5,3.2-1.6,4.9-2.5,3.2-4.3,4.6c-2.5-2.3-5.5-4.1-9.1-5.3-3.6-1.2-7.3-1.9-11.3-1.9-7.3,0-13.2,2.2-17.5,6.5-4.4,4.4-6.6,10.4-6.6,18.1s2.2,13.6,6.7,18.1c4.4,4.5,10.5,6.7,18.1,6.7s13-1.7,18.6-5.1l7.2,12.8c-8.3,5-17.5,7.5-27.8,7.5s-15.2-1.6-21.3-4.9c-6.1-3.2-10.9-7.8-14.2-13.7-3.4-5.9-5.1-12.8-5.1-20.8s1.7-14.9,5-20.9Z"/><path d="M-2781.1,594h-9.9v-105.5c0-3.4,1.8-5.1,5.4-5.1s3.3.4,4.5,1v109.5Z"/><path d="M-2696.5,588.6c0,12.1-3.2,21.3-9.6,27.5-6.4,6.2-15.9,9.4-28.4,9.4s-10-.5-15.3-1.3c-5.3-.9-9.9-2.1-13.8-3.6l2.8-7.8c3.5,1.3,7.7,2.3,12.6,3.2,4.9.8,9.4,1.2,13.5,1.2,9.8,0,17-2.3,21.5-6.8,4.5-4.6,6.8-11.2,6.8-20v-6.9c-1.9,3.9-5.1,7-9.7,9.3-4.6,2.3-10.1,3.5-16.6,3.5-10.1,0-18.3-2.8-24.5-8.4-6.2-5.6-9.3-13.4-9.3-23.4v-39.3c0-3.4,1.8-5.1,5.4-5.1s3.5.4,4.5,1.1v41.2c0,8.3,2.1,14.6,6.2,18.9,4.1,4.3,10.2,6.4,18.1,6.4s14.6-2.3,19-7c4.4-4.7,6.6-11.3,6.6-19.9v-35.7c0-3.4,1.8-5.1,5.4-5.1s3.5.4,4.5,1.1v67.7Z"/><path d="M-2681.7,504.9c0-3.4,1.8-5.1,5.4-5.1s3.3.4,4.5,1.1v19h26.4c3.7,0,5.6,1.6,5.6,5s-.3,2.7-.9,4h-31v43.5c0,4.9,1.3,8.7,3.9,11.3,2.6,2.7,6.3,4,11.2,4s10.5-1.4,15-4.3l4.4,6.4c-2.5,1.9-5.7,3.4-9.5,4.6-3.9,1.1-7.8,1.7-11.8,1.7-7.2,0-12.9-2-17-5.9-4.1-3.9-6.2-9.3-6.2-16.2v-69.1Z"/><path d="M-2631.7,499c-1.4-1.4-2-3.2-2-5.2s.7-3.7,2-5.2c1.3-1.4,3.1-2.2,5.2-2.2s3.8.7,5.2,2.2c1.4,1.5,2,3.2,2,5.2s-.7,3.7-2,5.2c-1.3,1.5-3.1,2.2-5.2,2.2s-3.8-.7-5.2-2.2ZM-2621.5,594h-9.9v-69c0-3.4,1.8-5.1,5.4-5.1s3.3.4,4.5,1.1v73Z"/><path d="M-2604.2,577.5c-3.2-5.9-4.7-12.7-4.7-20.4s1.7-15.1,5-20.9c3.3-5.8,7.9-10.4,13.9-13.6,5.9-3.2,12.9-4.8,20.8-4.8s9.2.5,13.6,1.6c4.4,1,7.4,2.3,9.1,3.7,1.7,1.4,2.5,3,2.5,4.7s-1.1,4-3.3,5.7c-2.5-2.2-5.7-3.9-9.6-5.2-3.9-1.2-8.1-1.9-12.5-1.9-8.9,0-15.9,2.7-21.1,8-5.2,5.4-7.7,12.8-7.7,22.4s2.7,17.2,8.1,22.7c5.4,5.4,12.9,8.1,22.5,8.1s13.4-1.6,19.2-4.9l4,7.3c-3.9,2.2-8,3.8-12.1,4.7-4.2.9-8.5,1.4-12.8,1.4-8.3,0-15.4-1.6-21.3-4.9-5.9-3.2-10.4-7.8-13.6-13.7Z"/><path d="M-2472.6,573.2c0,7-3,12.6-9,16.7s-14,6.2-23.9,6.2-9.5-.5-14.5-1.4c-5-.9-9.4-2-13.3-3.3-4-1.3-6.8-2.6-8.5-3.9l4.2-7.6c3.6,2.2,8.2,4,14,5.5s11.6,2.2,17.8,2.2,13-1.1,17-3.5c3.9-2.3,5.8-5.6,5.8-9.9,0-7.1-5.5-11.3-16.6-12.6l-17.1-2c-8-.9-14.2-3.1-18.4-6.7-4.3-3.5-6.5-8.2-6.5-14s2.8-11.9,8.5-15.7,13.8-5.6,24.3-5.6,10.8.5,15.5,1.4c4.7,1,8.6,2.2,11.5,3.9,2.9,1.6,4.4,3.5,4.4,5.6s-.3,2-.9,3.1c-.6,1-1.5,1.9-2.5,2.5-2.6-2.4-6.7-4.4-12.3-5.9-5.6-1.5-11.4-2.3-17.2-2.3s-12.1,1.1-15.8,3.2c-3.7,2.2-5.6,5.3-5.6,9.4,0,6.8,5.2,10.8,15.8,12l17.1,2c17.5,2,26.2,8.8,26.2,20.5Z"/></g></svg></span>
     <div class="f-links">
-      <a href="#recursos">Recursos</a>
-      <a href="#como">Como funciona</a>
-      <a href="#planos">Planos</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/#como">Como funciona</a>
+      <a href="/guias">Guias</a>
+      <a href="/#planos">Planos</a>
       <a href="/termos">Termos de uso</a>
       <a href="/privacidade">Privacidade</a>
     </div>
     <div class="f-legal">
-      <span>© 2026 DocLytics</span>
+      <span>© 2026 Doclytics</span>
       <span class="dev">Desenvolvido por Showa Marketing LTDA · CNPJ 47.707.966/0001-27</span>
     </div>
   </div>
@@ -878,6 +1914,29 @@ footer{border-top:1px solid var(--border);padding:48px 0;font-size:.86rem;color:
     items.forEach(function(el){ el.classList.add("in"); });
   }
 
+  /* ================= janelas "Saiba mais" das métricas ================= */
+  document.querySelectorAll("[data-modal]").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var d = document.getElementById(btn.dataset.modal);
+      if (!d) return;
+      if (d.showModal) d.showModal(); else d.setAttribute("open", "");  /* navegador antigo */
+    });
+  });
+
+  document.querySelectorAll("dialog.modal").forEach(function(d){
+    var x = d.querySelector(".modal-x");
+    if (x) x.addEventListener("click", function(){ d.close(); });
+
+    /* clique fora do card fecha — compara com os limites do próprio dialog,
+       senão um clique no padding interno fecharia junto */
+    d.addEventListener("click", function(e){
+      var r = d.getBoundingClientRect();
+      var dentro = e.clientX >= r.left && e.clientX <= r.right &&
+                   e.clientY >= r.top  && e.clientY <= r.bottom;
+      if (!dentro) d.close();
+    });
+  });
+
   /* ================= simulação do produto (hero) ================= */
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -887,7 +1946,7 @@ footer{border-top:1px solid var(--border);padding:48px 0;font-size:.86rem;color:
     int:  function(v){ return String(Math.round(v)); }
   };
 
-  var DUR = [3800, 6600, 5200];            /* quanto cada tela fica no ar */
+  var DUR = [3000, 4300, 3500];            /* quanto cada tela fica no ar */
   var TITLES = ["Painel da clínica", "Novo fechamento", "Relatório do mês"];
   var NAME = "Marina Alves";
 
@@ -929,7 +1988,7 @@ footer{border-top:1px solid var(--border);padding:48px 0;font-size:.86rem;color:
       var i = 0;
       timers.push(setTimeout(function tick(){
         simName.textContent = NAME.slice(0, ++i);   /* só apaga quando vai de fato digitar */
-        if (i < NAME.length) timers.push(setTimeout(tick, 62));
+        if (i < NAME.length) timers.push(setTimeout(tick, 44));
       }, delay));
     }
 
@@ -959,7 +2018,7 @@ footer{border-top:1px solid var(--border);padding:48px 0;font-size:.86rem;color:
       });
 
       if (i === 0) countAll(screens[0], 250);
-      if (i === 1) { typeName(300); countAll(screens[1], 3150); }
+      if (i === 1) { typeName(220); countAll(screens[1], 2140); }
 
       schedule();
     }
@@ -1001,16 +2060,13 @@ footer{border-top:1px solid var(--border);padding:48px 0;font-size:.86rem;color:
 
   var pEq = document.getElementById("p-eq"),
       pFull = document.getElementById("p-full"),
-      pSave = document.getElementById("p-save"),
-      pWa = document.getElementById("p-wa");
+      pSave = document.getElementById("p-save");
 
   function renderPlan(i){
     var p = PLANS[i], pct = savings(p);
     pEq.textContent = money(monthly(p));
     pFull.textContent = money(p.price) + " cobrados uma vez, por " + p.months + " meses";
     pSave.textContent = pct ? pct + "% mais barato que o trimestral" : "";
-    pWa.href = "https://wa.me/558398788088?text=" +
-      encodeURIComponent("Olá! Quero ativar o plano " + p.name + " do DocLytics.");
   }
 
   var pTabs = document.querySelectorAll(".periods button");
@@ -1031,4 +2087,95 @@ footer{border-top:1px solid var(--border);padding:48px 0;font-size:.86rem;color:
   });
   renderPlan(2);
 })();
+</script>
+
+<script>
+/* Roteador de arquivo único.
+   As três views convivem no DOM; sem JavaScript todas ficam visíveis e o
+   conteúdo continua legível — a navegação é melhoria, não requisito. */
+(function(){
+  "use strict";
+  var views = document.querySelectorAll(".view");
+  if (!views.length) return;
+
+  var META = {
+    "home":        ["Doclytics", "Descubra quanto cada origem devolveu em receita. CAC, ROAS e ROI por canal, para clínicas que investem em anúncios."],
+    "termos":      ["Termos de Uso — Doclytics", "Termos de uso da plataforma Doclytics para clínicas e consultórios."],
+    "privacidade": ["Política de Privacidade — Doclytics", "Como o Doclytics trata os dados das clínicas usuárias e de seus pacientes."],
+    "guias":       ["Guias — Doclytics", "CAC, ROAS e ROI explicados com números de clínica: o que cada métrica mede e qual valor é aceitável para o seu ticket."],
+    "guias/cac":   ["CAC: como calcular o custo de aquisição de paciente — Doclytics", "A fórmula do CAC, por que usar fechamentos e não leads, e qual custo de aquisição é aceitável para cada faixa de ticket."],
+    "guias/roas":  ["ROAS: por que não é lucro e como achar o mínimo — Doclytics", "ROAS mede receita bruta, não lucro. Aprenda a calcular o ROAS de equilíbrio a partir da margem do procedimento."],
+    "guias/roi":   ["ROI de anúncio: o que sobra depois do investimento — Doclytics", "Como ler o ROI de mídia, a diferença para o ROAS e o sinal que indica saturação do canal."]
+  };
+
+  function viewFor(path){
+    var p = String(path || "/").toLowerCase().replace(/\/+$/, "");
+    if (/\/termos$/.test(p)) return "termos";
+    if (/\/privacidade$/.test(p)) return "privacidade";
+    var g = p.match(/\/guias(?:\/(cac|roas|roi))?$/);
+    if (g) return g[1] ? "guias/" + g[1] : "guias";
+    return "home";
+  }
+
+  /* Uma rota real é curta. Em file:// ou data: o pathname carrega o documento
+     inteiro, e um trecho do próprio conteúdo pode casar com a expressão acima. */
+  function rotaValida(path){
+    var p = String(path || "");
+    return p.length <= 100 && p.indexOf("%") === -1;
+  }
+
+  function show(name, toTop){
+    for (var i = 0; i < views.length; i++) {
+      views[i].hidden = (views[i].getAttribute("data-view") !== name);
+    }
+    var m = META[name] || META.home;
+    document.title = m[0];
+    var d = document.querySelector('meta[name="description"]');
+    if (!d) { d = document.createElement("meta"); d.setAttribute("name","description"); document.head.appendChild(d); }
+    d.setAttribute("content", m[1]);
+    /* canonical só faz sentido em http(s); em file:// ou data: o origin é "null" */
+    if (/^https?:$/.test(location.protocol)) {
+      var c = document.querySelector('link[rel="canonical"]');
+      if (!c) { c = document.createElement("link"); c.setAttribute("rel","canonical"); document.head.appendChild(c); }
+      c.setAttribute("href", location.origin + (name === "home" ? "/" : "/" + name));
+    }
+    if (toTop) window.scrollTo(0, 0);
+  }
+
+  document.addEventListener("click", function(e){
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var a = e.target.closest ? e.target.closest('a[href^="/"]') : null;
+    if (!a || a.target === "_blank") return;
+
+    var href = a.getAttribute("href");
+    var base = href.split("#")[0];
+    var hash = href.split("#")[1];
+
+    /* /cadastro pertence ao app: deixa o navegador seguir normalmente */
+    if (base === "/cadastro") return;
+
+    e.preventDefault();
+    /* se um pop-up estiver aberto, fecha antes de trocar a view — senão ele
+       fica sobreposto à página nova */
+    var aberto = document.querySelector("dialog.modal[open]");
+    if (aberto && aberto.close) aberto.close();
+    var name = viewFor(base);
+    /* pushState falha em file:// e origens nulas — a navegação não pode depender dele */
+    try {
+      if (window.history && history.pushState) history.pushState({ v: name }, "", href);
+    } catch (_) {}
+    show(name, !hash);
+    if (hash) {
+      var target = document.getElementById(hash);
+      if (target) target.scrollIntoView();
+    }
+  });
+
+  window.addEventListener("popstate", function(){
+    show(viewFor(rotaValida(location.pathname) ? location.pathname : "/"), false);
+  });
+
+  show(viewFor(rotaValida(location.pathname) ? location.pathname : "/"), false);
+})();
+
 </script>
